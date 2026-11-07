@@ -100,8 +100,11 @@ Route::get('/book-appointment', [AppointmentController::class, 'create'])->name(
 Route::post('/book-appointment', [AppointmentController::class, 'store'])->name('appointment.store');
 
 // Online Report
+// Online Report
 Route::get('/online-report', [OnlineReportController::class, 'index'])->name('online-report.index');
 Route::post('/online-report', [OnlineReportController::class, 'search'])->name('online-report.search');
+Route::get('/online-report/{online_report}/download', [OnlineReportController::class, 'download'])->name('online-report.download');
+Route::get('/online-report/{online_report}/pdf', [OnlineReportController::class, 'generatedPdf'])->name('online-report.pdf');
 
 // Contact
 Route::get('/contact-us', [ContactController::class, 'index'])->name('contact.index');

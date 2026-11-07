@@ -29,8 +29,16 @@
                 <p class="font-semibold text-lg mb-1">{{ $report->patient_name }}</p>
                 <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Report ID: {{ $report->report_id }} | Date:
                     {{ $report->report_date?->format('d M, Y') }}</p>
-                <a href="{{ asset('storage/' . $report->report_file) }}" target="_blank" class="btn-primary">Download Report
-                    (PDF)</a>
+
+                @if ($report->report_file)
+                    <a href="{{ route('online-report.download', $report) }}" target="_blank" class="btn-primary">📄 Download
+                        Report (PDF)</a>
+                @elseif($report->hasGeneratedReport())
+                    <a href="{{ route('online-report.pdf', $report) }}" target="_blank" class="btn-primary">📄 View /
+                        Download Report (PDF)</a>
+                    <p class="text-xs text-gray-400 mt-3">PDF খুললে ব্রাউজারের Print (Ctrl+P) অপশন থেকে প্রিন্ট বা Save করতে
+                        পারবেন।</p>
+                @endif
             </div>
         @endif
 

@@ -34,13 +34,21 @@ class OnlineReportController extends Controller
             $data['status'] = 'ready';
         }
 
-        OnlineReport::create($data);
+        $report = OnlineReport::create($data);
+
+        $this->saveItems($request, $report);
+
+        if ($report->hasGeneratedReport() && ! $request->hasFile('report_file')) {
+            $report->update(['status' => 'ready']);
+        }
 
         return redirect()->route('admin.online-reports.index')->with('success', 'Report entry added successfully.');
     }
 
     public function edit(OnlineReport $onlineReport)
     {
+        $onlineReport->load('items');
+
         return view('admin.online-reports.form', ['report' => $onlineReport]);
     }
 
@@ -58,6 +66,13 @@ class OnlineReportController extends Controller
 
         $onlineReport->update($data);
 
+        $onlineReport->items()->delete();
+        $this->saveItems($request, $onlineReport);
+
+        if ($onlineReport->hasGeneratedReport() && ! $request->hasFile('report_file')) {
+            $onlineReport->update(['status' => 'ready']);
+        }
+
         return redirect()->route('admin.online-reports.index')->with('success', 'Report updated successfully.');
     }
 
@@ -71,16 +86,49 @@ class OnlineReportController extends Controller
         return back()->with('success', 'Report deleted successfully.');
     }
 
+    private function saveItems(Request $request, OnlineReport $report): void
+    {
+        $testNames = $request->input('test_name', []);
+        $resultValues = $request->input('result_value', []);
+        $units = $request->input('unit', []);
+        $normalRanges = $request->input('normal_range', []);
+        $abnormalFlags = $request->input('is_abnormal', []);
+
+        foreach ($testNames as $index => $name) {
+            if (trim($name) === '') {
+                continue;
+            }
+
+            $report->items()->create([
+                'test_name' => $name,
+                'result_value' => $resultValues[$index] ?? null,
+                'unit' => $units[$index] ?? null,
+                'normal_range' => $normalRanges[$index] ?? null,
+                'is_abnormal' => isset($abnormalFlags[$index]),
+                'sort_order' => $index,
+            ]);
+        }
+    }
+
     private function validateData(Request $request): array
     {
         return $request->validate([
             'patient_name' => ['required', 'string', 'max:255'],
             'patient_id' => ['nullable', 'string', 'max:100'],
+            'referred_by' => ['nullable', 'string', 'max:255'],
+            'age' => ['nullable', 'string', 'max:20'],
+            'gender' => ['nullable', 'in:Male,Female,Other'],
             'phone' => ['required', 'string', 'max:50'],
             'report_id' => ['nullable', 'string', 'max:100', 'unique:online_reports,report_id' . ($request->route('online_report') ? ',' . $request->route('online_report')->id : '')],
             'report_date' => ['nullable', 'date'],
             'status' => ['required', 'in:pending,ready'],
             'report_file' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
+            'comment' => ['nullable', 'string', 'max:1000'],
+            'verified_by' => ['nullable', 'string', 'max:255'],
+            'test_name.*' => ['nullable', 'string', 'max:255'],
+            'result_value.*' => ['nullable', 'string', 'max:100'],
+            'unit.*' => ['nullable', 'string', 'max:50'],
+            'normal_range.*' => ['nullable', 'string', 'max:100'],
         ]);
     }
 }
