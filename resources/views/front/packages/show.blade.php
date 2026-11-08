@@ -39,9 +39,47 @@
                     </ul>
                 @endif
 
-                <div class="flex flex-wrap items-center gap-4 mt-6">
-                    <a href="{{ route('appointment.create') }}" class="btn-primary">{{ __('site.book_appointment') }}</a>
+                <div class="flex flex-wrap items-center gap-4 mt-6" x-data="{ showPayModal: false }">
+                    <a href="{{ route('appointment.create') }}" class="btn-outline">{{ __('site.book_appointment') }}</a>
+                    <button type="button" @click="showPayModal = true" class="btn-primary">💳 Pay Online & Book</button>
                     @include('partials.social-share', ['title' => $package->name])
+
+                    {{-- Payment Modal --}}
+                    <div x-show="showPayModal" x-cloak
+                        class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center px-4"
+                        @click.self="showPayModal = false">
+                        <div class="bg-white dark:bg-gray-900 rounded-lg p-6 w-full max-w-md">
+                            <h3 class="font-semibold text-lg mb-4">Pay for {{ $package->name }} —
+                                ৳{{ number_format($package->price) }}</h3>
+
+                            <form action="{{ route('payment.package', $package) }}" method="POST" class="space-y-4">
+                                @csrf
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">Full Name</label>
+                                    <input type="text" name="payer_name"
+                                        value="{{ auth('patient')->user()->name ?? '' }}" required
+                                        class="w-full border border-gray-200 rounded-md px-4 py-2.5">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">Email</label>
+                                    <input type="email" name="payer_email"
+                                        value="{{ auth('patient')->user()->email ?? '' }}" required
+                                        class="w-full border border-gray-200 rounded-md px-4 py-2.5">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">Phone</label>
+                                    <input type="text" name="payer_phone"
+                                        value="{{ auth('patient')->user()->phone ?? '' }}" required
+                                        class="w-full border border-gray-200 rounded-md px-4 py-2.5">
+                                </div>
+                                <div class="flex gap-3">
+                                    <button type="button" @click="showPayModal = false"
+                                        class="btn-outline flex-1">Cancel</button>
+                                    <button type="submit" class="btn-primary flex-1">Proceed to Pay</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

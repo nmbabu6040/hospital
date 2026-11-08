@@ -230,6 +230,69 @@
                 বসাও।</p>
         </div>
 
+        <h3 class="font-semibold text-gray-700 border-b pb-2 mb-4 pt-4">SMS & Email Notifications</h3>
+
+        <label class="flex items-center gap-2 text-sm">
+            <input type="checkbox" name="email_notifications_enabled" value="1"
+                {{ old('email_notifications_enabled', $setting->email_notifications_enabled ?? true) ? 'checked' : '' }}>
+            Email Notification চালু রাখো (Appointment Confirmation, Status Update, Report Ready)
+        </label>
+
+        <label class="flex items-center gap-2 text-sm">
+            <input type="checkbox" name="sms_enabled" value="1"
+                {{ old('sms_enabled', $setting->sms_enabled) ? 'checked' : '' }}>
+            SMS Notification চালু করো
+        </label>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">SMS API URL</label>
+            <input type="text" name="sms_api_url" value="{{ old('sms_api_url', $setting->sms_api_url) }}"
+                placeholder="https://your-sms-provider.com/api/sendsms"
+                class="w-full border border-gray-200 rounded-md px-4 py-2.5 font-mono text-sm">
+            <p class="text-xs text-gray-400 mt-1">তোমার SMS প্রোভাইডার (BulkSMSBD, Alpha SMS ইত্যাদি) থেকে পাওয়া API
+                endpoint URL।</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-5">
+            <div>
+                <label class="block text-sm font-medium mb-1">SMS API Key</label>
+                <input type="text" name="sms_api_key" value="{{ old('sms_api_key', $setting->sms_api_key) }}"
+                    class="w-full border border-gray-200 rounded-md px-4 py-2.5 font-mono text-sm">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">SMS Sender ID</label>
+                <input type="text" name="sms_sender_id" value="{{ old('sms_sender_id', $setting->sms_sender_id) }}"
+                    class="w-full border border-gray-200 rounded-md px-4 py-2.5 font-mono text-sm">
+            </div>
+        </div>
+
+
+        <h3 class="font-semibold text-gray-700 border-b pb-2 mb-4 pt-4">Live Chat</h3>
+
+        <label class="flex items-center gap-2 text-sm">
+            <input type="checkbox" name="live_chat_enabled" value="1"
+                {{ old('live_chat_enabled', $setting->live_chat_enabled) ? 'checked' : '' }}>
+            Live Chat Widget চালু করো (Tawk.to)
+        </label>
+
+        <div class="grid grid-cols-2 gap-5">
+            <div>
+                <label class="block text-sm font-medium mb-1">Tawk.to Property ID</label>
+                <input type="text" name="tawk_to_property_id"
+                    value="{{ old('tawk_to_property_id', $setting->tawk_to_property_id) }}"
+                    placeholder="60f1a2b3c4d5e6..."
+                    class="w-full border border-gray-200 rounded-md px-4 py-2.5 font-mono text-sm">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Tawk.to Widget ID</label>
+                <input type="text" name="tawk_to_widget_id"
+                    value="{{ old('tawk_to_widget_id', $setting->tawk_to_widget_id) }}" placeholder="1f6abcde"
+                    class="w-full border border-gray-200 rounded-md px-4 py-2.5 font-mono text-sm">
+            </div>
+        </div>
+        <p class="text-xs text-gray-400">tawk.to তে ফ্রি অ্যাকাউন্ট খুলে Administration → Chat Widget থেকে এই দুটো ID
+            পাওয়া যাবে।</p>
+
         <h3 class="font-semibold text-gray-700 border-b pb-2 mb-4 pt-4">Maintenance Mode</h3>
 
         <label class="flex items-center gap-2 text-sm">

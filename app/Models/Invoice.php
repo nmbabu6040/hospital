@@ -10,10 +10,22 @@ class Invoice extends Model
     use HasFactory;
 
     protected $fillable = [
-        'invoice_no', 'patient_name', 'phone', 'email',
-        'appointment_id', 'package_id', 'hospital_id',
-        'subtotal', 'discount', 'total',
-        'payment_status', 'payment_method', 'invoice_date', 'notes', 'created_by',
+        'invoice_no',
+        'patient_name',
+        'phone',
+        'email',
+        'patient_id',
+        'appointment_id',
+        'package_id',
+        'hospital_id',
+        'subtotal',
+        'discount',
+        'total',
+        'payment_status',
+        'payment_method',
+        'invoice_date',
+        'notes',
+        'created_by',
     ];
 
     protected function casts(): array
@@ -41,6 +53,11 @@ class Invoice extends Model
     public function hospital()
     {
         return $this->belongsTo(Hospital::class);
+    }
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
     }
 
     public function createdBy()

@@ -132,6 +132,8 @@
     @if ($seoSetting->custom_head_scripts)
         {!! $seoSetting->custom_head_scripts !!}
     @endif
+
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 </head>
 
 <body class="bg-gray-50 text-gray-800 transition-colors duration-300">
@@ -162,10 +164,9 @@
 
     {{-- Floating Buttons --}}
     @php($setting = \App\Models\Setting::get())
-
     @if ($setting->whatsapp_number)
         <a href="https://wa.me/{{ preg_replace('/[^0-9]/', '', $setting->whatsapp_number) }}" target="_blank"
-            class="floating-btn bg-green-500 hover:bg-green-600 bottom-6 right-6" aria-label="WhatsApp">
+            class="floating-btn bg-green-500 hover:bg-green-600 bottom-6 left-6" aria-label="WhatsApp">
             <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path
                     d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.39 1.26 4.82L2 22l5.4-1.42a9.87 9.87 0 004.64 1.18h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0012.04 2zm5.83 14.07c-.25.69-1.24 1.27-1.95 1.42-.5.1-1.15.19-3.33-.71-2.79-1.15-4.59-3.99-4.73-4.17-.14-.19-1.13-1.5-1.13-2.86 0-1.37.7-2.03.95-2.31.25-.28.54-.35.72-.35.18 0 .36 0 .51.01.17.01.38-.06.6.46.22.53.76 1.84.82 1.97.07.14.11.3.02.49-.09.19-.14.3-.27.46-.14.17-.29.37-.41.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.17-.19.69-.8.88-1.08.19-.28.37-.23.63-.14.25.09 1.6.76 1.88.9.28.14.46.21.53.33.07.12.07.68-.18 1.36z" />
@@ -174,7 +175,7 @@
     @endif
 
     <button id="scroll-top-btn"
-        class="floating-btn bg-brand hover:bg-brand-dark bottom-24 right-6 opacity-0 translate-y-3 pointer-events-none"
+        class="floating-btn bg-brand hover:bg-brand-dark bottom-6 {{ $setting->whatsapp_number ? 'left-24' : 'left-6' }} opacity-0 translate-y-3 pointer-events-none"
         aria-label="Scroll to top">
         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
@@ -223,6 +224,34 @@
             });
         }
 
+        //search bar
+        function globalSearch() {
+            return {
+                open: false,
+                query: '',
+                results: [],
+                loading: false,
+
+                search() {
+                    if (this.query.length < 2) {
+                        this.results = [];
+                        return;
+                    }
+
+                    this.loading = true;
+                    fetch(`{{ route('search.quick') }}?q=${encodeURIComponent(this.query)}`)
+                        .then(res => res.json())
+                        .then(data => {
+                            this.results = data.results;
+                            this.loading = false;
+                        })
+                        .catch(() => {
+                            this.loading = false;
+                        });
+                },
+            };
+        }
+
         // Scroll to top button
         const scrollBtn = document.getElementById('scroll-top-btn');
         window.addEventListener('scroll', () => {
@@ -241,6 +270,24 @@
     </script>
 
     @stack('scripts')
+
+    {{-- Live Chat Widget (Tawk.to) --}}
+    @if ($themeSetting->live_chat_enabled && $themeSetting->tawk_to_property_id && $themeSetting->tawk_to_widget_id)
+        <script type="text/javascript">
+            var Tawk_API = Tawk_API || {};
+            var Tawk_LoadStart = new Date();
+            (function() {
+                var s1 = document.createElement("script"),
+                    s0 = document.getElementsByTagName("script")[0];
+                s1.async = true;
+                s1.src =
+                    'https://embed.tawk.to/{{ $themeSetting->tawk_to_property_id }}/{{ $themeSetting->tawk_to_widget_id }}';
+                s1.charset = 'UTF-8';
+                s1.setAttribute('crossorigin', '*');
+                s0.parentNode.insertBefore(s1, s0);
+            })();
+        </script>
+    @endif
 </body>
 
 </html>

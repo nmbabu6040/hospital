@@ -52,6 +52,16 @@ class Doctor extends Model
         return $this->belongsTo(Branch::class);
     }
 
+    public function schedules()
+    {
+        return $this->hasMany(DoctorSchedule::class);
+    }
+
+    public function leaves()
+    {
+        return $this->hasMany(DoctorLeave::class);
+    }
+
     public function appointments()
     {
         return $this->hasMany(Appointment::class);

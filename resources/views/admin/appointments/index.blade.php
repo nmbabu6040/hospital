@@ -14,6 +14,7 @@
                     <th class="p-3">Doctor</th>
                     <th class="p-3">Branch</th>
                     <th class="p-3">Date</th>
+                    <th class="p-3">Time / Serial</th>
                     <th class="p-3">Status</th>
                     <th class="p-3">Actions</th>
                 </tr>
@@ -26,6 +27,17 @@
                         <td class="p-3">{{ $appointment->doctor?->name ?? '—' }}</td>
                         <td class="p-3">{{ $appointment->branch?->name ?? '—' }}</td>
                         <td class="p-3">{{ \Illuminate\Support\Carbon::parse($appointment->date)->format('d M, Y') }}
+                        </td>
+
+                        <td class="p-3">
+                            @if ($appointment->slot_time)
+                                {{ \Carbon\Carbon::parse($appointment->slot_time)->format('h:i A') }}
+                                @if ($appointment->serial_no)
+                                    <span class="text-xs text-gray-400">(#{{ $appointment->serial_no }})</span>
+                                @endif
+                            @else
+                                —
+                            @endif
                         </td>
                         <td class="p-3">
                             <form action="{{ route('admin.appointments.update', $appointment) }}" method="POST"

@@ -202,7 +202,7 @@
         </tr>
         <tr>
             <td class="label">Patient ID</td>
-            <td class="value">{{ $onlineReport->patient_id ?: '—' }}</td>
+            <td class="value">{{ $onlineReport->patient_ref_id ?: '—' }}</td>
             <td class="label">Referred By</td>
             <td class="value">{{ $onlineReport->referred_by ?: 'Self' }}</td>
         </tr>

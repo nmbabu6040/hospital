@@ -42,6 +42,10 @@ class OnlineReportController extends Controller
             $report->update(['status' => 'ready']);
         }
 
+        if ($report->status === 'ready') {
+            \App\Services\NotificationService::sendReportReadyToPatient($report);
+        }
+
         return redirect()->route('admin.online-reports.index')->with('success', 'Report entry added successfully.');
     }
 
@@ -71,6 +75,10 @@ class OnlineReportController extends Controller
 
         if ($onlineReport->hasGeneratedReport() && ! $request->hasFile('report_file')) {
             $onlineReport->update(['status' => 'ready']);
+        }
+
+        if ($onlineReport->status === 'ready') {
+            \App\Services\NotificationService::sendReportReadyToPatient($onlineReport);
         }
 
         return redirect()->route('admin.online-reports.index')->with('success', 'Report updated successfully.');
@@ -114,7 +122,7 @@ class OnlineReportController extends Controller
     {
         return $request->validate([
             'patient_name' => ['required', 'string', 'max:255'],
-            'patient_id' => ['nullable', 'string', 'max:100'],
+            'patient_ref_id' => ['nullable', 'string', 'max:100'],
             'referred_by' => ['nullable', 'string', 'max:255'],
             'age' => ['nullable', 'string', 'max:20'],
             'gender' => ['nullable', 'in:Male,Female,Other'],

@@ -52,6 +52,15 @@ use App\Http\Controllers\Admin\HospitalReportController;
 use App\Http\Controllers\Admin\HospitalStatController;
 use App\Http\Controllers\Admin\InvoiceController;
 use App\Http\Controllers\Admin\InvoicePdfController;
+use App\Http\Controllers\Patient\AuthController as PatientAuthController;
+use App\Http\Controllers\Patient\DashboardController as PatientDashboardController;
+use App\Http\Controllers\Front\SlotController;
+use App\Http\Controllers\Admin\DoctorScheduleController;
+use App\Http\Controllers\Front\PaymentController;
+use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
+use App\Http\Controllers\Front\SearchController;
+use App\Http\Controllers\Admin\VideoConsultationController as AdminVideoConsultationController;
+use App\Http\Controllers\Front\VideoConsultationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,6 +70,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/search', [SearchController::class, 'index'])->name('search.index');
+Route::get('/search/quick', [SearchController::class, 'quick'])->name('search.quick');
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
 Route::get('/lang/{locale}', [LanguageController::class, 'switch'])->name('lang.switch');
@@ -101,7 +112,9 @@ Route::get('/tests/{test}', [TestController::class, 'show'])->name('tests.show')
 Route::get('/book-appointment', [AppointmentController::class, 'create'])->name('appointment.create');
 Route::post('/book-appointment', [AppointmentController::class, 'store'])->name('appointment.store');
 
-// Online Report
+Route::get('/doctors/{doctor}/available-dates', [SlotController::class, 'availableDates'])->name('slots.dates');
+Route::get('/doctors/{doctor}/slots', [SlotController::class, 'slots'])->name('slots.index');
+
 // Online Report
 Route::get('/online-report', [OnlineReportController::class, 'index'])->name('online-report.index');
 Route::post('/online-report', [OnlineReportController::class, 'search'])->name('online-report.search');
@@ -121,9 +134,59 @@ Route::get('/media/offers', [OfferController::class, 'index'])->name('offers.ind
 Route::get('/media/videos', [VideoController::class, 'index'])->name('videos.index');
 Route::get('/media/journal', [JournalController::class, 'index'])->name('journals.index');
 
+//video
+Route::get('/video-consultation', [VideoConsultationController::class, 'create'])->name('video-consultation.create');
+Route::post('/video-consultation', [VideoConsultationController::class, 'store'])->name('video-consultation.store');
+Route::get('/video-consultation/{videoConsultation}/join', [VideoConsultationController::class, 'joinRoom'])->name('video-consultation.join');
+
+
 // Dynamic Custom Pages (সবসময় সবার শেষে রাখতে হবে)
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/page/{page:slug}', [CustomPageController::class, 'show'])->name('pages.show');
+
+
+/*
+|--------------------------------------------------------------------------
+| Payment Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::post('/packages/{package}/pay', [PaymentController::class, 'initiatePackagePayment'])->name('payment.package');
+Route::get('/invoices/{invoice}/pay', [PaymentController::class, 'initiateInvoicePayment'])->name('payment.invoice');
+
+
+Route::match(['get', 'post'], '/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::match(['get', 'post'], '/payment/fail', [PaymentController::class, 'fail'])->name('payment.fail');
+Route::match(['get', 'post'], '/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+Route::post('/payment/ipn', [PaymentController::class, 'ipn'])->name('payment.ipn');
+Route::get('/payment/receipt/{payment}', [PaymentController::class, 'receipt'])->name('payment.receipt');
+
+
+
+
+/*
+|--------------------------------------------------------------------------
+| Patient Portal Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::prefix('patient')->name('patient.')->group(function () {
+    Route::get('register', [PatientAuthController::class, 'showRegister'])->name('register');
+    Route::post('register', [PatientAuthController::class, 'register'])->name('register.submit');
+    Route::get('login', [PatientAuthController::class, 'showLogin'])->name('login');
+    Route::post('login', [PatientAuthController::class, 'login'])->name('login.submit');
+
+    Route::middleware('patient.auth')->group(function () {
+        Route::post('logout', [PatientAuthController::class, 'logout'])->name('logout');
+        Route::get('dashboard', [PatientDashboardController::class, 'index'])->name('dashboard');
+        Route::get('appointments', [PatientDashboardController::class, 'appointments'])->name('appointments');
+        Route::get('reports', [PatientDashboardController::class, 'reports'])->name('reports');
+        Route::get('invoices', [PatientDashboardController::class, 'invoices'])->name('invoices');
+        Route::get('profile', [PatientDashboardController::class, 'profile'])->name('profile');
+        Route::put('profile', [PatientDashboardController::class, 'updateProfile'])->name('profile.update');
+        Route::put('password', [PatientDashboardController::class, 'updatePassword'])->name('password.update');
+    });
+});
 
 /*
 |--------------------------------------------------------------------------
@@ -140,6 +203,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
         Route::resource('doctors', AdminDoctorController::class)->except('show');
+        Route::get('doctors/{doctor}/schedule', [DoctorScheduleController::class, 'index'])->name('doctors.schedule');
+        Route::post('doctors/{doctor}/schedule', [DoctorScheduleController::class, 'store'])->name('doctors.schedule.store');
+        Route::delete('doctors/{doctor}/schedule/{schedule}', [DoctorScheduleController::class, 'destroy'])->name('doctors.schedule.destroy');
+        Route::patch('doctors/{doctor}/schedule/{schedule}/toggle', [DoctorScheduleController::class, 'toggleActive'])->name('doctors.schedule.toggle');
+        Route::post('doctors/{doctor}/leave', [DoctorScheduleController::class, 'storeLeave'])->name('doctors.leave.store');
+        Route::delete('doctors/{doctor}/leave/{leave}', [DoctorScheduleController::class, 'destroyLeave'])->name('doctors.leave.destroy');
         Route::resource('departments', AdminDepartmentController::class)->except('show');
         Route::resource('hospitals', AdminHospitalController::class)->except('show');
         Route::resource('diagnostics', AdminDiagnosticController::class)->except('show');
@@ -190,11 +259,19 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('invoices', InvoiceController::class);
         Route::get('invoices/{invoice}/pdf', [InvoicePdfController::class, 'download'])->name('invoices.pdf');
 
+        Route::get('payments', [AdminPaymentController::class, 'index'])->name('payments.index');
+
         Route::get('about-content', [AboutContentController::class, 'edit'])->name('about-content.edit');
         Route::put('about-content', [AboutContentController::class, 'update'])->name('about-content.update');
         Route::resource('accreditations', AccreditationController::class)->except('show');
 
         Route::resource('pages', AdminPageController::class)->except('show');
+
+
+        Route::get('video-consultations', [AdminVideoConsultationController::class, 'index'])->name('video-consultations.index');
+        Route::get('video-consultations/{video_consultation}/edit', [AdminVideoConsultationController::class, 'edit'])->name('video-consultations.edit');
+        Route::put('video-consultations/{video_consultation}', [AdminVideoConsultationController::class, 'update'])->name('video-consultations.update');
+        Route::delete('video-consultations/{video_consultation}', [AdminVideoConsultationController::class, 'destroy'])->name('video-consultations.destroy');
 
         // শুধু Super Admin access করতে পারবে
         Route::middleware('admin.role:super_admin')->group(function () {

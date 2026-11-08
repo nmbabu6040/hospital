@@ -11,6 +11,7 @@ class OnlineReport extends Model
 
     protected $fillable = [
         'patient_name',
+        'patient_ref_id',
         'patient_id',
         'referred_by',
         'age',
@@ -33,7 +34,12 @@ class OnlineReport extends Model
 
     public function items()
     {
-        return $this->hasMany(OnlineReportItem::class)->orderBy('sort_order');
+        return $this->hasMany(OnlineReportItem::class);
+    }
+
+    public function patient()
+    {
+        return $this->belongsTo(Patient::class);
     }
 
     public function hasGeneratedReport(): bool

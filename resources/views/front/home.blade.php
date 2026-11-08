@@ -58,9 +58,9 @@
 
     {{-- Quick Search --}}
     <section class="max-w-4xl mx-auto px-4 -mt-10 relative z-10">
-        <form action="{{ route('doctors.index') }}" method="GET"
+        <form action="{{ route('search.index') }}" method="GET"
             class="bg-white rounded-lg shadow-lg p-4 flex flex-col md:flex-row gap-3">
-            <input type="text" name="search" placeholder="{{ __('site.search_placeholder') }}"
+            <input type="text" name="q" placeholder="{{ __('site.search_placeholder') }}"
                 class="flex-1 border border-gray-200 rounded-md px-4 py-3 focus:outline-none focus:ring-2 focus:ring-brand">
             <button type="submit" class="btn-primary">
                 <svg class="w-5 h-5 inline" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -37,12 +37,16 @@ class Setting extends Model
         'custom_head_scripts',
         'theme_primary_color',
         'theme_font',
+        'live_chat_enabled',
+        'tawk_to_property_id',
+        'tawk_to_widget_id',
     ];
 
     protected function casts(): array
     {
         return [
             'maintenance_mode' => 'boolean',
+            'live_chat_enabled' => 'boolean',
         ];
     }
 

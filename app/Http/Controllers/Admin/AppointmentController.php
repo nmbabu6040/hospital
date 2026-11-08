@@ -32,7 +32,9 @@ class AppointmentController extends Controller
 
         $appointment->update(['status' => $request->status]);
 
-        return back()->with('success', 'Appointment status updated.');
+        \App\Services\NotificationService::sendAppointmentStatusUpdateToPatient($appointment);
+
+        return back()->with('success', 'Appointment status updated and patient notified.');
     }
 
     public function destroy(Appointment $appointment)

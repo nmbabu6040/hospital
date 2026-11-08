@@ -8,6 +8,10 @@
         <div class="flex gap-2">
             <a href="{{ route('admin.invoices.pdf', $invoice) }}" target="_blank" class="btn-primary text-sm">📄 Download
                 PDF</a>
+            @if ($invoice->payment_status !== 'paid')
+                <a href="{{ route('payment.invoice', $invoice) }}" class="btn-primary text-sm" target="_blank">💳 Pay
+                    Online</a>
+            @endif
             <a href="{{ route('admin.invoices.edit', $invoice) }}" class="btn-outline text-sm">Edit</a>
         </div>
     </div>

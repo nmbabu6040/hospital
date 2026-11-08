@@ -1,6 +1,6 @@
 @php($setting = \App\Models\Setting::get())
 
-<div class="bg-brand text-white text-sm">
+<div class="bg-brand text-white text-sm relative z-[60]">
     <div class="max-w-7xl mx-auto px-4 py-2 flex items-center justify-between">
         <div class="flex items-center gap-4">
             @if ($setting->facebook_url)
@@ -47,6 +47,39 @@
                 <a href="{{ route('lang.switch', 'bn') }}"
                     class="{{ app()->getLocale() == 'bn' ? 'font-bold underline' : '' }}">বাংলা</a>
             </div>
+
+            @if (auth('patient')->check())
+                <div class="relative" x-data="{ open: false }">
+                    <button @click="open = !open" @click.outside="open = false"
+                        class="text-xs flex items-center gap-1 hover:text-gray-200">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                        {{ auth('patient')->user()->name }}
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                        </svg>
+                    </button>
+                    <div x-show="open" x-cloak x-transition
+                        class="absolute right-0 mt-2 w-44 bg-white text-gray-700 rounded-md shadow-lg py-2 z-50">
+                        <a href="{{ route('patient.dashboard') }}" class="block px-4 py-2 text-sm hover:bg-gray-50">📊
+                            My Account</a>
+                        <a href="{{ route('patient.appointments') }}"
+                            class="block px-4 py-2 text-sm hover:bg-gray-50">📅 My Appointments</a>
+                        <a href="{{ route('patient.reports') }}" class="block px-4 py-2 text-sm hover:bg-gray-50">📄 My
+                            Reports</a>
+                        <form action="{{ route('patient.logout') }}" method="POST"
+                            class="border-t border-gray-100 mt-1">
+                            @csrf
+                            <button
+                                class="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50">Logout</button>
+                        </form>
+                    </div>
+                </div>
+            @else
+                <a href="{{ route('patient.login') }}" class="text-xs hover:text-gray-200">Patient Login</a>
+            @endif
 
             <button id="theme-toggle" type="button" class="p-1.5 rounded-full hover:bg-white/10 transition"
                 aria-label="Toggle dark mode">

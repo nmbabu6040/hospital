@@ -48,9 +48,24 @@ class SettingController extends Controller
             'custom_head_scripts' => ['nullable', 'string'],
             'theme_primary_color' => ['nullable', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'theme_font' => ['nullable', 'string', 'in:Poppins,Hind Siliguri,Inter,Roboto,Nunito,Open Sans,Noto Sans Bengali,Lato'],
+
+            'sms_enabled' => ['nullable', 'boolean'],
+            'sms_api_url' => ['nullable', 'url', 'max:255'],
+            'sms_api_key' => ['nullable', 'string', 'max:255'],
+            'sms_sender_id' => ['nullable', 'string', 'max:50'],
+            'email_notifications_enabled' => ['nullable', 'boolean'],
+
+            'live_chat_enabled' => ['nullable', 'boolean'],
+            'tawk_to_property_id' => ['nullable', 'string', 'max:100'],
+            'tawk_to_widget_id' => ['nullable', 'string', 'max:100'],
         ]);
 
         $data['maintenance_mode'] = $request->boolean('maintenance_mode');
+
+        $data['sms_enabled'] = $request->boolean('sms_enabled');
+
+        $data['live_chat_enabled'] = $request->boolean('live_chat_enabled');
+        $data['email_notifications_enabled'] = $request->boolean('email_notifications_enabled');
 
         foreach (['logo', 'footer_logo', 'favicon', 'og_image'] as $field) {
             if ($request->hasFile($field)) {

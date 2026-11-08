@@ -30,8 +30,7 @@
         <div class="grid grid-cols-3 gap-5">
             <div>
                 <label class="block text-sm font-medium mb-1">Patient ID</label>
-                <input type="text" name="patient_id" value="{{ old('patient_id', $report->patient_id) }}"
-                    class="w-full border border-gray-200 rounded-md px-4 py-2.5">
+                <input type="text" name="patient_ref_id" value="{{ old('patient_ref_id', $report->patient_ref_id) }}">
             </div>
             <div>
                 <label class="block text-sm font-medium mb-1">Age</label>
@@ -42,10 +41,12 @@
                 <label class="block text-sm font-medium mb-1">Gender</label>
                 <select name="gender" class="w-full border border-gray-200 rounded-md px-4 py-2.5">
                     <option value="">-- Select --</option>
-                    <option value="Male" {{ old('gender', $report->gender) == 'Male' ? 'selected' : '' }}>Male</option>
+                    <option value="Male" {{ old('gender', $report->gender) == 'Male' ? 'selected' : '' }}>Male
+                    </option>
                     <option value="Female" {{ old('gender', $report->gender) == 'Female' ? 'selected' : '' }}>Female
                     </option>
-                    <option value="Other" {{ old('gender', $report->gender) == 'Other' ? 'selected' : '' }}>Other</option>
+                    <option value="Other" {{ old('gender', $report->gender) == 'Other' ? 'selected' : '' }}>Other
+                    </option>
                 </select>
             </div>
         </div>
@@ -118,7 +119,8 @@
                 Row</button>
         </div>
 
-        <h3 class="font-semibold text-gray-700 border-b pb-2 mb-4 pt-4">Additional Info (ঐচ্ছিক, generated PDF-এ দেখাবে)
+        <h3 class="font-semibold text-gray-700 border-b pb-2 mb-4 pt-4">Additional Info (ঐচ্ছিক, generated PDF-এ
+            দেখাবে)
         </h3>
 
         <div>

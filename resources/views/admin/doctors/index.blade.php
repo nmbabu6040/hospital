@@ -39,6 +39,8 @@
                         <td class="p-3 space-x-2">
                             <a href="{{ route('admin.doctors.edit', $doctor) }}"
                                 class="text-blue-600 hover:underline">Edit</a>
+                            <a href="{{ route('admin.doctors.schedule', $doctor) }}"
+                                class="text-purple-600 hover:underline">Schedule</a>
                             @if (auth('admin')->user()->canDelete())
                                 <form action="{{ route('admin.doctors.destroy', $doctor) }}" method="POST" class="inline"
                                     onsubmit="return confirm('Delete this doctor?')">

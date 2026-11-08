@@ -1,4 +1,4 @@
-<header class="bg-white shadow-sm sticky top-0 z-50">
+<header class="bg-white shadow-sm sticky top-0 z-40">
     <div class="max-w-7xl mx-auto px-4">
         <div class="flex items-center justify-between py-4">
 
@@ -79,15 +79,65 @@
 
             </nav>
 
+
+            <div class="relative hidden lg:block" x-data="globalSearch()">
+                <button @click="open = !open; open && $nextTick(() => $refs.searchInput.focus())"
+                    class="p-2 text-gray-500 hover:text-brand" aria-label="Search">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+
+                <div x-show="open" x-cloak @click.outside="open = false" x-transition
+                    class="absolute right-0 mt-2 w-96 bg-white dark:bg-gray-900 rounded-lg shadow-lg border border-gray-100 dark:border-gray-800 z-50 p-3">
+                    <form action="{{ route('search.index') }}" method="GET" @submit="open = false">
+                        <input x-ref="searchInput" type="text" name="q" x-model="query"
+                            @input.debounce.400ms="search()" placeholder="Search doctors, packages, news..."
+                            class="w-full border border-gray-200 dark:border-gray-700 dark:bg-gray-800 rounded-md px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-brand">
+                    </form>
+
+                    <div x-show="results.length > 0" class="mt-2 max-h-80 overflow-y-auto space-y-1">
+                        <template x-for="result in results" :key="result.url">
+                            <a :href="result.url"
+                                class="flex items-center gap-3 px-3 py-2 rounded-md hover:bg-gray-50 dark:hover:bg-gray-800">
+                                <span class="text-lg" x-text="result.icon"></span>
+                                <div class="min-w-0">
+                                    <p class="text-xs text-brand font-medium" x-text="result.type"></p>
+                                    <p class="text-sm text-gray-800 dark:text-gray-100 truncate"
+                                        x-text="result.title"></p>
+                                </div>
+                            </a>
+                        </template>
+                    </div>
+
+                    <template x-if="query.length >= 2 && results.length === 0 && !loading">
+                        <p class="text-sm text-gray-400 text-center py-4">কোনো ফলাফল পাওয়া যায়নি।</p>
+                    </template>
+                </div>
+            </div>
+
             <button id="mobile-menu-btn" class="lg:hidden p-2">
                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+
+            <button id="mobile-menu-btn" class="lg:hidden p-2">
+                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
         </div>
 
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="hidden lg:hidden pb-4 space-y-2 text-sm font-medium text-gray-700">
+            <form action="{{ route('search.index') }}" method="GET" class="pb-3 border-b">
+                <input type="text" name="q" placeholder="Search..."
+                    class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm">
+            </form>
             <a href="{{ route('home') }}" class="block py-2 border-b">{{ __('site.home') }}</a>
             <a href="{{ route('about.md-message') }}" class="block py-2 border-b">{{ __('site.md_message') }}</a>
             <a href="{{ route('about.about-us') }}" class="block py-2 border-b">{{ __('site.about') }}</a>
@@ -120,6 +170,12 @@
                 class="flex-1 min-w-[140px] text-center bg-brand text-white py-2.5 px-3 rounded-md text-sm font-medium hover:bg-brand-dark transition">
                 {{ __('site.book_appointment') }}
             </a>
+
+            <a href="{{ route('video-consultation.create') }}"
+                class="flex-1 min-w-[140px] text-center bg-gray-100 text-gray-800 py-2.5 px-3 rounded-md text-sm font-medium hover:bg-gray-200 transition">
+                📹 Video Consultation
+            </a>
+
             <a href="{{ route('doctors.index') }}"
                 class="flex-1 min-w-[140px] text-center bg-gray-100 text-gray-800 py-2.5 px-3 rounded-md text-sm font-medium hover:bg-gray-200 transition">
                 {{ __('site.find_a_doctor') }}
