@@ -152,6 +152,7 @@
             <a href="{{ route('news.index') }}" class="block py-2 border-b">{{ __('site.news') }}</a>
             <a href="{{ route('gallery.index') }}" class="block py-2 border-b">{{ __('site.gallery') }}</a>
             <a href="{{ route('offers.index') }}" class="block py-2 border-b">{{ __('site.offers') }}</a>
+
             <a href="{{ route('videos.index') }}" class="block py-2 border-b">{{ __('site.videos') }}</a>
             <a href="{{ route('journals.index') }}" class="block py-2 border-b">{{ __('site.journal') }}</a>
 
@@ -165,20 +166,11 @@
         </div>
 
         <!-- Action Buttons -->
+        <!-- Action Buttons -->
         <div class="flex flex-wrap gap-2 pb-4">
             <a href="{{ route('appointment.create') }}"
                 class="flex-1 min-w-[140px] text-center bg-brand text-white py-2.5 px-3 rounded-md text-sm font-medium hover:bg-brand-dark transition">
                 {{ __('site.book_appointment') }}
-            </a>
-
-            <a href="{{ route('video-consultation.create') }}"
-                class="flex-1 min-w-[140px] text-center bg-gray-100 text-gray-800 py-2.5 px-3 rounded-md text-sm font-medium hover:bg-gray-200 transition">
-                📹 Video Consultation
-            </a>
-
-            <a href="{{ route('doctors.index') }}"
-                class="flex-1 min-w-[140px] text-center bg-gray-100 text-gray-800 py-2.5 px-3 rounded-md text-sm font-medium hover:bg-gray-200 transition">
-                {{ __('site.find_a_doctor') }}
             </a>
             <a href="{{ route('online-report.index') }}"
                 class="flex-1 min-w-[140px] text-center bg-gray-100 text-gray-800 py-2.5 px-3 rounded-md text-sm font-medium hover:bg-gray-200 transition">
@@ -188,6 +180,37 @@
                 class="flex-1 min-w-[140px] text-center bg-gray-100 text-gray-800 py-2.5 px-3 rounded-md text-sm font-medium hover:bg-gray-200 transition">
                 {{ __('site.packages_vaccines') }}
             </a>
+            <a href="{{ route('ambulance.create') }}"
+                class="flex-1 min-w-[140px] text-center bg-red-500 text-white py-2.5 px-3 rounded-md text-sm font-medium hover:bg-red-600 transition">
+                🚑 Ambulance
+            </a>
+
+            <div class="relative flex-1 min-w-[140px]" x-data="{ open: false }">
+                <button @click="open = !open" @click.outside="open = false"
+                    class="w-full text-center bg-gray-100 text-gray-800 py-2.5 px-3 rounded-md text-sm font-medium hover:bg-gray-200 transition flex items-center justify-center gap-1">
+                    More Services
+                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                    </svg>
+                </button>
+                <div x-show="open" x-cloak x-transition
+                    class="absolute left-0 mt-2 w-56 bg-white dark:bg-gray-900 rounded-md shadow-lg border border-gray-100 dark:border-gray-800 py-2 z-40">
+                    <a href="{{ route('video-consultation.create') }}"
+                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">📹 Video
+                        Consultation</a>
+                    <a href="{{ route('blood-bank.index') }}"
+                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">🩸 Blood Bank</a>
+                    <a href="{{ route('locations.index') }}"
+                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">📍 Our Locations</a>
+                    <a href="{{ route('beds.index') }}"
+                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">🛏️ Bed
+                        Availability</a>
+                    <a href="{{ route('queue.index') }}" target="_blank"
+                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">📺 Live Queue</a>
+                    <a href="{{ route('pharmacy.index') }}"
+                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">💊 Pharmacy</a>
+                </div>
+            </div>
         </div>
     </div>
 </header>

@@ -66,4 +66,9 @@ class Doctor extends Model
     {
         return $this->hasMany(Appointment::class);
     }
+
+    public function queueDisplay()
+    {
+        return $this->hasOne(QueueDisplay::class);
+    }
 }

@@ -42,4 +42,19 @@ class Hospital extends Model
     {
         return $this->hasMany(Doctor::class);
     }
+
+    public function bedCategories()
+    {
+        return $this->hasMany(BedCategory::class);
+    }
+
+    public function totalBeds(): int
+    {
+        return $this->bedCategories()->sum('total_beds');
+    }
+
+    public function totalAvailableBeds(): int
+    {
+        return $this->bedCategories()->sum('available_beds');
+    }
 }

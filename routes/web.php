@@ -61,6 +61,17 @@ use App\Http\Controllers\Admin\PaymentController as AdminPaymentController;
 use App\Http\Controllers\Front\SearchController;
 use App\Http\Controllers\Admin\VideoConsultationController as AdminVideoConsultationController;
 use App\Http\Controllers\Front\VideoConsultationController;
+use App\Http\Controllers\Admin\BloodBankController as AdminBloodBankController;
+use App\Http\Controllers\Front\BloodBankController;
+use App\Http\Controllers\Admin\AmbulanceController as AdminAmbulanceController;
+use App\Http\Controllers\Admin\AmbulanceRequestController as AdminAmbulanceRequestController;
+use App\Http\Controllers\Front\AmbulanceController;
+use App\Http\Controllers\Admin\BedCategoryController as AdminBedCategoryController;
+use App\Http\Controllers\Admin\QueueDisplayController as AdminQueueDisplayController;
+use App\Http\Controllers\Front\QueueController;
+use App\Http\Controllers\Admin\MedicineController as AdminMedicineController;
+use App\Http\Controllers\Admin\MedicineSaleController;
+use App\Http\Controllers\Front\MedicineController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -100,6 +111,17 @@ Route::get('/locations', [LocationController::class, 'index'])->name('locations.
 Route::get('/diagnostics', [DiagnosticController::class, 'index'])->name('diagnostics.index');
 Route::get('/diagnostics/{diagnostic}', [DiagnosticController::class, 'show'])->name('diagnostics.show');
 
+//ambulance
+Route::get('/ambulance', [AmbulanceController::class, 'create'])->name('ambulance.create');
+Route::post('/ambulance', [AmbulanceController::class, 'store'])->name('ambulance.store');
+
+//pharmacy
+Route::get('/pharmacy', [MedicineController::class, 'index'])->name('pharmacy.index');
+
+//bad availability
+Route::get('/bed-availability', [QueueController::class, 'beds'])->name('beds.index');
+Route::get('/live-queue', [QueueController::class, 'queue'])->name('queue.index');
+
 // Packages
 Route::get('/packages', [PackageController::class, 'index'])->name('packages.index');
 Route::get('/packages/{package}', [PackageController::class, 'show'])->name('packages.show');
@@ -107,6 +129,13 @@ Route::get('/packages/{package}', [PackageController::class, 'show'])->name('pac
 // Individual Tests
 Route::get('/tests', [TestController::class, 'index'])->name('tests.index');
 Route::get('/tests/{test}', [TestController::class, 'show'])->name('tests.show');
+
+//blood bank
+Route::get('/blood-bank', [BloodBankController::class, 'index'])->name('blood-bank.index');
+Route::get('/blood-bank/register', [BloodBankController::class, 'createDonor'])->name('blood-bank.register');
+Route::post('/blood-bank/register', [BloodBankController::class, 'storeDonor'])->name('blood-bank.register.store');
+Route::get('/blood-bank/request', [BloodBankController::class, 'createRequest'])->name('blood-bank.request');
+Route::post('/blood-bank/request', [BloodBankController::class, 'storeRequest'])->name('blood-bank.request.store');
 
 // Appointment
 Route::get('/book-appointment', [AppointmentController::class, 'create'])->name('appointment.create');
@@ -226,6 +255,21 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::patch('appointments/{appointment}', [AdminAppointmentController::class, 'update'])->name('appointments.update');
         Route::delete('appointments/{appointment}', [AdminAppointmentController::class, 'destroy'])->name('appointments.destroy');
 
+        //medicine
+        Route::resource('medicines', AdminMedicineController::class)->except('show');
+
+        Route::get('medicine-sales', [MedicineSaleController::class, 'index'])->name('medicine-sales.index');
+        Route::get('medicine-sales/create', [MedicineSaleController::class, 'create'])->name('medicine-sales.create');
+        Route::post('medicine-sales', [MedicineSaleController::class, 'store'])->name('medicine-sales.store');
+        Route::get('medicine-sales/{medicine_sale}', [MedicineSaleController::class, 'show'])->name('medicine-sales.show');
+
+        //ambulance
+        Route::resource('ambulances', AdminAmbulanceController::class)->except('show');
+
+        Route::get('ambulance-requests', [AdminAmbulanceRequestController::class, 'index'])->name('ambulance-requests.index');
+        Route::put('ambulance-requests/{ambulance_request}', [AdminAmbulanceRequestController::class, 'update'])->name('ambulance-requests.update');
+        Route::delete('ambulance-requests/{ambulance_request}', [AdminAmbulanceRequestController::class, 'destroy'])->name('ambulance-requests.destroy');
+
         Route::get('messages', [AdminMessageController::class, 'index'])->name('messages.index');
         Route::patch('messages/{message}/read', [AdminMessageController::class, 'markRead'])->name('messages.read');
         Route::delete('messages/{message}', [AdminMessageController::class, 'destroy'])->name('messages.destroy');
@@ -245,6 +289,26 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::patch('comments/{comment}/approve', [AdminCommentController::class, 'approve'])->name('comments.approve');
         Route::patch('comments/{comment}/reject', [AdminCommentController::class, 'reject'])->name('comments.reject');
         Route::delete('comments/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
+
+        //bed availability
+        Route::get('bed-categories', [AdminBedCategoryController::class, 'index'])->name('bed-categories.index');
+        Route::post('bed-categories', [AdminBedCategoryController::class, 'store'])->name('bed-categories.store');
+        Route::put('bed-categories/{bed_category}', [AdminBedCategoryController::class, 'update'])->name('bed-categories.update');
+        Route::delete('bed-categories/{bed_category}', [AdminBedCategoryController::class, 'destroy'])->name('bed-categories.destroy');
+
+        Route::get('queue-displays', [AdminQueueDisplayController::class, 'index'])->name('queue-displays.index');
+        Route::put('queue-displays/{doctor}', [AdminQueueDisplayController::class, 'update'])->name('queue-displays.update');
+
+
+        //blood bank
+        Route::get('blood-donors', [AdminBloodBankController::class, 'donors'])->name('blood-donors.index');
+        Route::patch('blood-donors/{donor}/verify', [AdminBloodBankController::class, 'toggleVerified'])->name('blood-donors.verify');
+        Route::patch('blood-donors/{donor}/available', [AdminBloodBankController::class, 'toggleAvailable'])->name('blood-donors.available');
+        Route::delete('blood-donors/{donor}', [AdminBloodBankController::class, 'destroyDonor'])->name('blood-donors.destroy');
+
+        Route::get('blood-requests', [AdminBloodBankController::class, 'requests'])->name('blood-requests.index');
+        Route::patch('blood-requests/{request}/fulfill', [AdminBloodBankController::class, 'toggleFulfilled'])->name('blood-requests.fulfill');
+        Route::delete('blood-requests/{request}', [AdminBloodBankController::class, 'destroyRequest'])->name('blood-requests.destroy');
 
 
         Route::get('notifications', [AdminNotificationController::class, 'index'])->name('notifications.index');

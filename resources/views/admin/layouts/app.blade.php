@@ -109,6 +109,23 @@
                         </svg>
                         <span x-show="!sidebarCollapsed" x-cloak>Hospitals</span>
                     </a>
+
+                    <a href="{{ route('admin.medicines.index') }}"
+                        class="sidebar-link {{ request()->routeIs('admin.medicines.*') ? 'sidebar-link-active' : '' }}">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                        <span x-show="!sidebarCollapsed" x-cloak>Medicines</span>
+                    </a>
+                    <a href="{{ route('admin.medicine-sales.index') }}"
+                        class="sidebar-link {{ request()->routeIs('admin.medicine-sales.*') ? 'sidebar-link-active' : '' }}">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <span x-show="!sidebarCollapsed" x-cloak>Pharmacy Sales</span>
+                    </a>
                     <a href="{{ route('admin.diagnostics.index') }}"
                         class="sidebar-link {{ request()->routeIs('admin.diagnostics.*') ? 'sidebar-link-active' : '' }}">
                         <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -282,6 +299,57 @@
                                 d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
                         </svg>
                         <span x-show="!sidebarCollapsed" x-cloak>Messages</span>
+                    </a>
+
+                    <a href="{{ route('admin.blood-donors.index') }}"
+                        class="sidebar-link {{ request()->routeIs('admin.blood-donors.*') ? 'sidebar-link-active' : '' }}">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 4.5C8 10.5 4 14.5 4 18a8 8 0 0016 0c0-3.5-4-7.5-8-13.5z" />
+                        </svg>
+                        <span x-show="!sidebarCollapsed" x-cloak>Blood Donors</span>
+                    </a>
+                    <a href="{{ route('admin.blood-requests.index') }}"
+                        class="sidebar-link {{ request()->routeIs('admin.blood-requests.*') ? 'sidebar-link-active' : '' }}">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                        </svg>
+                        <span x-show="!sidebarCollapsed" x-cloak>Blood Requests</span>
+                    </a>
+
+                    <a href="{{ route('admin.ambulance-requests.index') }}"
+                        class="sidebar-link {{ request()->routeIs('admin.ambulance-requests.*') ? 'sidebar-link-active' : '' }}">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                        </svg>
+                        <span x-show="!sidebarCollapsed" x-cloak>Ambulance Requests</span>
+                    </a>
+                    <a href="{{ route('admin.ambulances.index') }}"
+                        class="sidebar-link {{ request()->routeIs('admin.ambulances.*') ? 'sidebar-link-active' : '' }}">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0zM13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1" />
+                        </svg>
+                        <span x-show="!sidebarCollapsed" x-cloak>Ambulance Fleet</span>
+                    </a>
+
+                    <a href="{{ route('admin.bed-categories.index') }}"
+                        class="sidebar-link {{ request()->routeIs('admin.bed-categories.*') ? 'sidebar-link-active' : '' }}">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2H5a2 2 0 01-2-2zm0 0V5a2 2 0 012-2h6a2 2 0 012 2v2" />
+                        </svg>
+                        <span x-show="!sidebarCollapsed" x-cloak>Bed Availability</span>
+                    </a>
+                    <a href="{{ route('admin.queue-displays.index') }}"
+                        class="sidebar-link {{ request()->routeIs('admin.queue-displays.*') ? 'sidebar-link-active' : '' }}">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 20h5v-2a4 4 0 00-3-3.87M9 20H4v-2a4 4 0 013-3.87m6-1.13a4 4 0 100-8 4 4 0 000 8z" />
+                        </svg>
+                        <span x-show="!sidebarCollapsed" x-cloak>Live Queue</span>
                     </a>
 
                     @php($pendingCommentsCount = \App\Models\Comment::where('status', 'pending')->count())
