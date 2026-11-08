@@ -5,11 +5,11 @@
     <meta charset="UTF-8">
     <style>
         @page {
-            margin: 100px 40px 80px 40px;
+            margin: 100px 40px 100px 40px;
         }
 
         body {
-            font-family: 'DejaVu Sans', sans-serif;
+            font-family: 'notosansbengali', 'DejaVu Sans', sans-serif;
             font-size: 12px;
             color: #1f2937;
         }
@@ -56,15 +56,15 @@
 
         footer {
             position: fixed;
-            bottom: -60px;
+            bottom: -85px;
             left: 0;
             right: 0;
-            height: 60px;
+            height: 85px;
             border-top: 1px solid #ddd;
             padding-top: 8px;
             font-size: 9px;
             color: #888;
-            text-align: center;
+            text-align: left;
         }
 
         .patient-info {
@@ -171,9 +171,19 @@
     </header>
 
     <footer>
-        এই রিপোর্টটি কম্পিউটার-জেনারেটেড, তাই স্বাক্ষরের প্রয়োজন নেই। কোনো সমস্যা হলে যোগাযোগ করুন:
-        {{ $setting->hotline }}
-        <br>Report ID: {{ $onlineReport->report_id }} · Generated: {{ now()->format('d M, Y h:i A') }}
+        <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+                <td style="width: 60px; vertical-align: top;">
+                    <img src="data:image/svg+xml;base64,{{ $qrCodeBase64 }}" style="width: 55px; height: 55px;">
+                </td>
+                <td style="vertical-align: top; padding-left: 8px; text-align: left;">
+                    This is a computer-generated report and does not require a signature. For any queries, contact:
+                    {{ $setting->hotline }}
+                    <br>Report ID: {{ $onlineReport->report_id }} · Generated: {{ now()->format('d M, Y h:i A') }}
+                    <br>Scan QR code to verify report authenticity.
+                </td>
+            </tr>
+        </table>
     </footer>
 
     <table class="patient-info">

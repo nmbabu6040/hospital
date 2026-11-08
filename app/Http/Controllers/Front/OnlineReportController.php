@@ -7,6 +7,8 @@ use App\Models\OnlineReport;
 use App\Models\Setting;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\File;
 
 class OnlineReportController extends Controller
 {
@@ -37,9 +39,6 @@ class OnlineReportController extends Controller
         return view('front.online-report.index', ['report' => $report]);
     }
 
-    /**
-     * Admin-এর আপলোড করা আসল PDF ডাউনলোড করে, যদি থাকে।
-     */
     public function download(OnlineReport $onlineReport)
     {
         abort_unless($onlineReport->report_file, 404);
@@ -47,9 +46,6 @@ class OnlineReportController extends Controller
         return response()->download(storage_path('app/public/' . $onlineReport->report_file));
     }
 
-    /**
-     * ম্যানুয়ালি এন্ট্রি দেওয়া টেস্ট রেজাল্ট থেকে Labaid-স্টাইল letterhead PDF জেনারেট করে।
-     */
     public function generatedPdf(OnlineReport $onlineReport)
     {
         abort_unless($onlineReport->hasGeneratedReport(), 404);
@@ -57,8 +53,29 @@ class OnlineReportController extends Controller
         $onlineReport->load('items');
         $setting = Setting::get();
 
-        $pdf = Pdf::loadView('front.online-report.pdf-letterhead', compact('onlineReport', 'setting'))
+        $qrData = 'Report ID: ' . $onlineReport->report_id . "\n"
+            . 'Patient: ' . $onlineReport->patient_name . "\n"
+            . 'Phone: ' . $onlineReport->phone . "\n"
+            . 'Verify at: ' . route('online-report.index');
+
+        $qrCodeSvg = QrCode::format('svg')->size(120)->margin(1)->generate($qrData);
+        $qrCodeBase64 = base64_encode($qrCodeSvg);
+
+        $pdf = Pdf::loadView('front.online-report.pdf-letterhead', compact('onlineReport', 'setting', 'qrCodeBase64'))
             ->setPaper('a4', 'portrait');
+
+        $fontDir = storage_path('fonts');
+        if (File::exists($fontDir . '/NotoSansBengali-Regular.ttf')) {
+            $fontMetrics = $pdf->getDomPDF()->getFontMetrics();
+            $fontMetrics->registerFont(
+                ['family' => 'notosansbengali', 'style' => 'normal', 'weight' => 'normal'],
+                $fontDir . '/NotoSansBengali-Regular.ttf'
+            );
+            $fontMetrics->registerFont(
+                ['family' => 'notosansbengali', 'style' => 'normal', 'weight' => 'bold'],
+                $fontDir . '/NotoSansBengali-Bold.ttf'
+            );
+        }
 
         return $pdf->stream('Report-' . $onlineReport->report_id . '.pdf');
     }

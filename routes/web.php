@@ -50,6 +50,8 @@ use App\Http\Controllers\Front\CommentController;
 use App\Http\Controllers\Admin\NotificationController as AdminNotificationController;
 use App\Http\Controllers\Admin\HospitalReportController;
 use App\Http\Controllers\Admin\HospitalStatController;
+use App\Http\Controllers\Admin\InvoiceController;
+use App\Http\Controllers\Admin\InvoicePdfController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -184,6 +186,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         Route::resource('hospital-stats', HospitalStatController::class)->except('show');
         Route::get('hospital-stats-reports', [HospitalReportController::class, 'index'])->name('hospital-stats.reports');
+
+        Route::resource('invoices', InvoiceController::class);
+        Route::get('invoices/{invoice}/pdf', [InvoicePdfController::class, 'download'])->name('invoices.pdf');
 
         Route::get('about-content', [AboutContentController::class, 'edit'])->name('about-content.edit');
         Route::put('about-content', [AboutContentController::class, 'update'])->name('about-content.update');

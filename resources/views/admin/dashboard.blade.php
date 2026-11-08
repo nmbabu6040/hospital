@@ -4,131 +4,75 @@
 
 @section('content')
 
-    {{-- Stats Cards --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-8">
+    {{-- Hero Stats — Gradient Cards --}}
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 mb-6">
 
-        <div class="bg-white rounded-xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition">
-            <div class="w-14 h-14 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-7 h-7 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
-                </svg>
-            </div>
-            <div>
-                <p class="text-gray-500 text-xs font-medium uppercase tracking-wide">Doctors</p>
-                <p class="text-2xl font-bold text-gray-800">{{ $counts['doctors'] }}</p>
-            </div>
+        <div
+            class="relative overflow-hidden rounded-2xl p-5 text-white bg-gradient-to-br from-blue-500 via-blue-600 to-indigo-700 shadow-lg">
+            <svg class="absolute -right-4 -bottom-4 w-24 h-24 opacity-20" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M19 7.5v3m0 0v3m0-3h3m-3 0h-3m-2.25-4.125a3.375 3.375 0 11-6.75 0 3.375 3.375 0 016.75 0zM4 19.235v-.11a6.375 6.375 0 0112.75 0v.109A12.318 12.318 0 0110.374 21c-2.331 0-4.512-.645-6.374-1.766z" />
+            </svg>
+            <p class="text-xs opacity-80 uppercase tracking-wide font-medium">Total Doctors</p>
+            <p class="text-3xl font-bold mt-1">{{ $counts['doctors'] }}</p>
+            <p class="text-xs opacity-70 mt-2">{{ $counts['departments'] }} Departments</p>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition">
-            <div class="w-14 h-14 rounded-xl bg-purple-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-7 h-7 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M3 21v-13l9-4 9 4v13M9 21v-6a3 3 0 016 0v6" />
-                </svg>
-            </div>
-            <div>
-                <p class="text-gray-500 text-xs font-medium uppercase tracking-wide">Departments</p>
-                <p class="text-2xl font-bold text-gray-800">{{ $counts['departments'] }}</p>
-            </div>
+        <div
+            class="relative overflow-hidden rounded-2xl p-5 text-white bg-gradient-to-br from-emerald-500 via-green-600 to-teal-700 shadow-lg">
+            <svg class="absolute -right-4 -bottom-4 w-24 h-24 opacity-20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+            <p class="text-xs opacity-80 uppercase tracking-wide font-medium">Appointments</p>
+            <p class="text-3xl font-bold mt-1">{{ $counts['appointments'] }}</p>
+            <p class="text-xs opacity-70 mt-2">{{ $counts['pending_appointments'] }} pending</p>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition">
-            <div class="w-14 h-14 rounded-xl bg-green-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                </svg>
-            </div>
-            <div>
-                <p class="text-gray-500 text-xs font-medium uppercase tracking-wide">Appointments</p>
-                <p class="text-2xl font-bold text-gray-800">{{ $counts['appointments'] }}</p>
-                @if ($counts['pending_appointments'] > 0)
-                    <p class="text-xs text-amber-600 font-medium mt-0.5">{{ $counts['pending_appointments'] }} pending</p>
-                @endif
-            </div>
+        <div
+            class="relative overflow-hidden rounded-2xl p-5 text-white bg-gradient-to-br from-amber-400 via-orange-500 to-red-500 shadow-lg">
+            <svg class="absolute -right-4 -bottom-4 w-24 h-24 opacity-20" fill="currentColor" viewBox="0 0 24 24">
+                <path
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <p class="text-xs opacity-80 uppercase tracking-wide font-medium">New Messages</p>
+            <p class="text-3xl font-bold mt-1">{{ $counts['messages'] }}</p>
+            <p class="text-xs opacity-70 mt-2">{{ $counts['pending_comments'] }} pending comments</p>
         </div>
 
-        <div class="bg-white rounded-xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition">
-            <div class="w-14 h-14 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-7 h-7 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
-            </div>
-            <div>
-                <p class="text-gray-500 text-xs font-medium uppercase tracking-wide">New Messages</p>
-                <p class="text-2xl font-bold text-gray-800">{{ $counts['messages'] }}</p>
-            </div>
-
-
-        </div>
-
-        <div class="bg-white rounded-xl shadow-sm p-5 flex items-center gap-4 hover:shadow-md transition">
-            <div class="w-14 h-14 rounded-xl bg-pink-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-7 h-7 text-pink-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
-                </svg>
-            </div>
-            <div>
-                <p class="text-gray-500 text-xs font-medium uppercase tracking-wide">Pending Comments</p>
-                <p class="text-2xl font-bold text-gray-800">{{ $counts['pending_comments'] }}</p>
-            </div>
+        <div
+            class="relative overflow-hidden rounded-2xl p-5 text-white bg-gradient-to-br from-fuchsia-500 via-purple-600 to-violet-700 shadow-lg">
+            <svg class="absolute -right-4 -bottom-4 w-24 h-24 opacity-20" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <p class="text-xs opacity-80 uppercase tracking-wide font-medium">Hospitals & Diagnostics</p>
+            <p class="text-3xl font-bold mt-1">{{ $counts['hospitals'] + $counts['diagnostics'] }}</p>
+            <p class="text-xs opacity-70 mt-2">{{ $counts['hospitals'] }} Hospitals, {{ $counts['diagnostics'] }}
+                Diagnostics</p>
         </div>
 
     </div>
 
-    {{-- Secondary Stats Row --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8">
-        <div class="bg-white rounded-xl shadow-sm p-5 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-lg bg-indigo-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5" />
-                </svg>
-            </div>
-            <div>
-                <p class="text-gray-500 text-xs font-medium uppercase tracking-wide">Hospitals</p>
-                <p class="text-xl font-bold text-gray-800">{{ $counts['hospitals'] }}</p>
-            </div>
-        </div>
-
-        <div class="bg-white rounded-xl shadow-sm p-5 flex items-center gap-4">
-            <div class="w-12 h-12 rounded-lg bg-teal-100 flex items-center justify-center flex-shrink-0">
-                <svg class="w-6 h-6 text-teal-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-            </div>
-            <div>
-                <p class="text-gray-500 text-xs font-medium uppercase tracking-wide">Diagnostic Centers</p>
-                <p class="text-xl font-bold text-gray-800">{{ $counts['diagnostics'] }}</p>
-            </div>
-        </div>
-    </div>
-
-    {{-- Patient Statistics Quick View --}}
-    <div class="bg-white rounded-xl shadow-sm p-5 mb-8">
+    {{-- Patient Statistics — Colorful Quick View --}}
+    <div class="bg-white rounded-xl shadow-sm p-5 mb-6">
         <div class="flex items-center justify-between mb-4">
             <h3 class="font-semibold text-gray-700">Patient Statistics</h3>
             <a href="{{ route('admin.hospital-stats.reports') }}" class="text-xs text-brand hover:underline">Full Reports
                 →</a>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div class="bg-blue-50 rounded-lg p-4">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border border-blue-200">
                 <p class="text-xs text-blue-600 font-medium uppercase">Today — Admitted</p>
                 <p class="text-2xl font-bold text-blue-700 mt-1">{{ $patientSummary['today_admitted'] }}</p>
             </div>
-            <div class="bg-purple-50 rounded-lg p-4">
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4 border border-purple-200">
                 <p class="text-xs text-purple-600 font-medium uppercase">Today — Test Only</p>
                 <p class="text-2xl font-bold text-purple-700 mt-1">{{ $patientSummary['today_test_only'] }}</p>
             </div>
-            <div class="bg-blue-50 rounded-lg p-4">
+            <div class="bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg p-4 border border-blue-200">
                 <p class="text-xs text-blue-600 font-medium uppercase">This Month — Admitted</p>
                 <p class="text-2xl font-bold text-blue-700 mt-1">{{ $patientSummary['month_admitted'] }}</p>
             </div>
-            <div class="bg-purple-50 rounded-lg p-4">
+            <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-lg p-4 border border-purple-200">
                 <p class="text-xs text-purple-600 font-medium uppercase">This Month — Test Only</p>
                 <p class="text-2xl font-bold text-purple-700 mt-1">{{ $patientSummary['month_test_only'] }}</p>
             </div>
@@ -139,29 +83,88 @@
         @endif
     </div>
 
-    {{-- Charts Row --}}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
-
+    {{-- Charts Row 1 --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-6">
         <div class="lg:col-span-2 bg-white rounded-xl shadow-sm p-5">
             <h3 class="font-semibold text-gray-700 mb-4">Appointments — Last 7 Days</h3>
             <canvas id="appointmentTrendChart" height="110"></canvas>
         </div>
-
         <div class="bg-white rounded-xl shadow-sm p-5">
             <h3 class="font-semibold text-gray-700 mb-4">Appointment Status</h3>
             <canvas id="statusPieChart" height="180"></canvas>
+        </div>
+    </div>
+
+    {{-- Charts Row 2 — Monthly Patient Combo Chart --}}
+    <div class="bg-white rounded-xl shadow-sm p-5 mb-6">
+        <h3 class="font-semibold text-gray-700 mb-4">Admitted vs Test-Only — Last 6 Months</h3>
+        <canvas id="monthlyComboChart" height="90"></canvas>
+    </div>
+
+    {{-- Top Performers --}}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
+
+        <div class="bg-white rounded-xl shadow-sm p-5">
+            <h3 class="font-semibold text-gray-700 mb-4">🏆 Top Doctors (By Appointments)</h3>
+            <div class="space-y-3">
+                @forelse($topDoctors as $index => $item)
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0
+                        {{ $index == 0 ? 'bg-amber-400' : ($index == 1 ? 'bg-gray-400' : ($index == 2 ? 'bg-orange-400' : 'bg-gray-200 text-gray-500')) }}">
+                            {{ $index + 1 }}
+                        </span>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium truncate">{{ $item->doctor->name }}</p>
+                            <div class="w-full bg-gray-100 rounded-full h-1.5 mt-1">
+                                <div class="bg-brand h-1.5 rounded-full"
+                                    style="width: {{ $topDoctors->first() ? ($item->total / $topDoctors->first()->total) * 100 : 0 }}%">
+                                </div>
+                            </div>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-600 flex-shrink-0">{{ $item->total }}</span>
+                    </div>
+                @empty
+                    <p class="text-sm text-gray-400 text-center py-6">কোনো অ্যাপয়েন্টমেন্ট ডেটা নেই।</p>
+                @endforelse
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-sm p-5">
+            <h3 class="font-semibold text-gray-700 mb-4">📊 Top Departments (By Doctor Count)</h3>
+            <div class="space-y-3">
+                @forelse($topDepartments as $index => $dept)
+                    <div class="flex items-center gap-3">
+                        <span
+                            class="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold text-white flex-shrink-0
+                        {{ $index == 0 ? 'bg-emerald-500' : ($index == 1 ? 'bg-teal-400' : ($index == 2 ? 'bg-cyan-400' : 'bg-gray-200 text-gray-500')) }}">
+                            {{ $index + 1 }}
+                        </span>
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm font-medium truncate">{{ $dept->name }}</p>
+                            <div class="w-full bg-gray-100 rounded-full h-1.5 mt-1">
+                                <div class="bg-emerald-500 h-1.5 rounded-full"
+                                    style="width: {{ $topDepartments->first() && $topDepartments->first()->doctors_count ? ($dept->doctors_count / $topDepartments->first()->doctors_count) * 100 : 0 }}%">
+                                </div>
+                            </div>
+                        </div>
+                        <span class="text-sm font-semibold text-gray-600 flex-shrink-0">{{ $dept->doctors_count }}</span>
+                    </div>
+                @empty
+                    <p class="text-sm text-gray-400 text-center py-6">কোনো ডেটা নেই।</p>
+                @endforelse
+            </div>
         </div>
 
     </div>
 
     {{-- Recent Activity --}}
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-5 mb-6">
 
         <div class="bg-white rounded-xl shadow-sm p-5">
             <div class="flex items-center justify-between mb-4">
                 <h3 class="font-semibold text-gray-700">Recent Appointments</h3>
-                <a href="{{ route('admin.appointments.index') }}" class="text-xs text-brand hover:underline">View All
-                    →</a>
+                <a href="{{ route('admin.appointments.index') }}" class="text-xs text-brand hover:underline">View All →</a>
             </div>
             <div class="space-y-3">
                 @forelse($recentAppointments as $appointment)
@@ -211,23 +214,43 @@
 
     </div>
 
+    {{-- Content Overview Mini Cards --}}
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+        <div class="bg-white rounded-lg shadow-sm p-4 text-center">
+            <p class="text-2xl font-bold text-blue-600">{{ $contentSummary['hospitals'] }}</p>
+            <p class="text-xs text-gray-500 mt-1">Active Hospitals</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm p-4 text-center">
+            <p class="text-2xl font-bold text-purple-600">{{ $contentSummary['diagnostics'] }}</p>
+            <p class="text-xs text-gray-500 mt-1">Active Diagnostics</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm p-4 text-center">
+            <p class="text-2xl font-bold text-amber-600">{{ $contentSummary['packages'] }}</p>
+            <p class="text-xs text-gray-500 mt-1">Health Packages</p>
+        </div>
+        <div class="bg-white rounded-lg shadow-sm p-4 text-center">
+            <p class="text-2xl font-bold text-emerald-600">{{ $contentSummary['news'] }}</p>
+            <p class="text-xs text-gray-500 mt-1">News Articles</p>
+        </div>
+    </div>
+
     {{-- Quick Actions --}}
-    <div class="bg-white rounded-xl shadow-sm p-5 mt-8">
+    <div class="bg-white rounded-xl shadow-sm p-5">
         <h3 class="font-semibold text-gray-700 mb-4">Quick Actions</h3>
         <div class="flex flex-wrap gap-3">
             <a href="{{ route('admin.doctors.create') }}" class="btn-outline text-sm">+ Add Doctor</a>
             <a href="{{ route('admin.news.create') }}" class="btn-outline text-sm">+ Add News</a>
             <a href="{{ route('admin.packages.create') }}" class="btn-outline text-sm">+ Add Package</a>
             <a href="{{ route('admin.sliders.create') }}" class="btn-outline text-sm">+ Add Slider</a>
+            <a href="{{ route('admin.hospital-stats.create') }}" class="btn-outline text-sm">📝 Add Today's Stats</a>
             <a href="{{ route('admin.settings.edit') }}" class="btn-outline text-sm">⚙ Site Settings</a>
-            <a href="{{ route('admin.backups.index') }}" class="btn-outline text-sm">💾 Backup Now</a>
         </div>
     </div>
 
     @push('scripts')
         <script>
-            const trendCtx = document.getElementById('appointmentTrendChart');
-            new Chart(trendCtx, {
+            // Appointment Trend — Line Chart
+            new Chart(document.getElementById('appointmentTrendChart'), {
                 type: 'line',
                 data: {
                     labels: {!! json_encode($chartLabels) !!},
@@ -260,8 +283,8 @@
                 }
             });
 
-            const pieCtx = document.getElementById('statusPieChart');
-            new Chart(pieCtx, {
+            // Appointment Status — Doughnut Chart
+            new Chart(document.getElementById('statusPieChart'), {
                 type: 'doughnut',
                 data: {
                     labels: ['Pending', 'Confirmed', 'Cancelled'],
@@ -282,6 +305,40 @@
                                 boxWidth: 12,
                                 padding: 15
                             }
+                        }
+                    }
+                }
+            });
+
+            // Monthly Admitted vs Test-Only — Combo Bar Chart
+            new Chart(document.getElementById('monthlyComboChart'), {
+                type: 'bar',
+                data: {
+                    labels: {!! json_encode($monthlyLabels) !!},
+                    datasets: [{
+                            label: 'Admitted',
+                            data: {!! json_encode($monthlyAdmitted) !!},
+                            backgroundColor: '#3b82f6',
+                            borderRadius: 6,
+                        },
+                        {
+                            label: 'Test Only',
+                            data: {!! json_encode($monthlyTestOnly) !!},
+                            backgroundColor: '#a855f7',
+                            borderRadius: 6,
+                        },
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true
                         }
                     }
                 }

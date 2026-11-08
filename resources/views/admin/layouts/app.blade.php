@@ -248,6 +248,15 @@
                         </svg>
                         <span x-show="!sidebarCollapsed" x-cloak>Hospital Stats</span>
                     </a>
+
+                    <a href="{{ route('admin.invoices.index') }}"
+                        class="sidebar-link {{ request()->routeIs('admin.invoices.*') ? 'sidebar-link-active' : '' }}">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21l-2-1-2 1-2-1-2 1-2-1-2 1V3l2 1 2-1 2 1 2-1 2 1 2-1v18z" />
+                        </svg>
+                        <span x-show="!sidebarCollapsed" x-cloak>Invoices</span>
+                    </a>
                     <a href="{{ route('admin.messages.index') }}"
                         class="sidebar-link {{ request()->routeIs('admin.messages.*') ? 'sidebar-link-active' : '' }}">
                         <svg class="w-5 h-5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
