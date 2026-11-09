@@ -69,6 +69,9 @@
                         class="hover:text-white">{{ __('site.book_appointment') }}</a></li>
                 <li><a href="{{ route('contact.index') }}" class="hover:text-white">{{ __('site.contact_us') }}</a>
                 </li>
+                <li><a href="{{ route('career.index') }}" class="hover:text-white">{{ __('site.career') }}</a></li>
+                <li><a href="{{ route('notices.index') }}" class="hover:text-white">{{ __('site.notice_board') }}</a>
+                </li>
                 @php($footerPages = \App\Models\Page::where('is_active', true)->where('show_in_menu', true)->where('menu_location', 'footer')->orderBy('sort_order')->get())
                 @foreach ($footerPages as $footerPage)
                     <li><a href="{{ route('pages.show', $footerPage) }}"

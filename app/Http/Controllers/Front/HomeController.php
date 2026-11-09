@@ -24,7 +24,7 @@ class HomeController extends Controller
         $departments = Department::where('is_featured', true)->orderBy('sort_order')->take(8)->get();
         $doctors = Doctor::where('is_active', true)->latest()->take(10)->get();
         $news = News::latest('published_at')->take(4)->get();
-        $sisterConcerns = SisterConcern::all();
+        $sisterConcerns = SisterConcern::latest('created_at')->take(5)->get();
         $accreditations = Accreditation::orderBy('sort_order')->get();
         $aboutContent = AboutContent::get();
         $featuredVideo = Video::where('is_featured', true)->first() ?? Video::latest()->first();

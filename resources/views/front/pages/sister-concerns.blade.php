@@ -10,7 +10,7 @@
             @forelse($sisterConcerns as $sc)
                 <a href="{{ $sc->website_url ?? '#' }}" target="_blank" class="card p-6 text-center">
                     <img src="{{ $sc->logo ? asset('storage/' . $sc->logo) : 'https://placehold.co/200x100?text=' . urlencode($sc->name) }}"
-                        class="h-20 mx-auto mb-4" loading="lazy" alt="{{ $sc->name }}">
+                        class="h-40 mx-auto mb-4" loading="lazy" alt="{{ $sc->name }}">
                     <h3 class="font-semibold mb-2">{{ $sc->name }}</h3>
                     <p class="text-sm text-gray-500">{{ Str::limit($sc->description, 80) }}</p>
                 </a>

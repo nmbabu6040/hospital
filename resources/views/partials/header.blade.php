@@ -12,69 +12,76 @@
             </a>
 
             <nav class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-700">
-                <a href="{{ route('home') }}" class="hover:text-brand">{{ __('site.home') }}</a>
+                <a href="{{ route('home') }}" class="nav-link">{{ __('site.home') }}</a>
 
-                <div class="relative group">
-                    <button class="hover:text-brand flex items-center gap-1">
+                <div class="relative group z-50">
+                    <button class="nav-dropdown-trigger hover:text-brand flex items-center gap-1 py-2">
                         {{ __('site.about_us') }}
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-3 h-3 transition-transform duration-300 group-hover:rotate-180" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div
-                        class="absolute hidden group-hover:block bg-white shadow-lg rounded-md py-2 w-56 top-full left-0">
+                        class="nav-dropdown-panel absolute block bg-white shadow-xl rounded-lg py-2 w-56 top-full left-0 border border-gray-50">
                         <a href="{{ route('about.md-message') }}"
-                            class="block px-4 py-2 hover:bg-gray-50">{{ __('site.md_message') }}</a>
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.md_message') }}</a>
                         <a href="{{ route('about.about-us') }}"
-                            class="block px-4 py-2 hover:bg-gray-50">{{ __('site.about') }}</a>
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.about') }}</a>
                         <a href="{{ route('about.accreditation') }}"
-                            class="block px-4 py-2 hover:bg-gray-50">{{ __('site.accreditation') }}</a>
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.accreditation') }}</a>
                         <a href="{{ route('about.sister-concerns') }}"
-                            class="block px-4 py-2 hover:bg-gray-50">{{ __('site.sister_concerns') }}</a>
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.sister_concerns') }}</a>
+                        <a href="{{ route('about.corporate') }}"
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.corporate_tie_ups') }}</a>
+                        <a href="{{ route('about.awards') }}"
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.awards_&_recognition') }}</a>
+                        <a href="{{ route('about.csr') }}"
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.csr') }}</a>
                     </div>
                 </div>
 
-                <a href="{{ route('doctors.index') }}" class="hover:text-brand">{{ __('site.doctors') }}</a>
-                <a href="{{ route('departments.index') }}" class="hover:text-brand">{{ __('site.departments') }}</a>
-                <a href="{{ route('hospitals.index') }}" class="hover:text-brand">{{ __('site.hospitals') }}</a>
+                <a href="{{ route('doctors.index') }}" class="nav-link">{{ __('site.doctors') }}</a>
+                <a href="{{ route('departments.index') }}" class="nav-link">{{ __('site.departments') }}</a>
+                <a href="{{ route('hospitals.index') }}" class="nav-link">{{ __('site.hospitals') }}</a>
 
-                <a href="{{ route('locations.index') }}" class="hover:text-brand">Locations</a>
+                <a href="{{ route('locations.index') }}" class="nav-link">{{ __('site.locations') }}</a>
 
-                <a href="{{ route('diagnostics.index') }}" class="hover:text-brand">{{ __('site.diagnostics') }}</a>
+                <a href="{{ route('diagnostics.index') }}" class="nav-link">{{ __('site.diagnostics') }}</a>
 
-                <div class="relative group">
-                    <button class="hover:text-brand flex items-center gap-1">
+                <div class="relative group z-50">
+                    <button class="nav-dropdown-trigger hover:text-brand flex items-center gap-1 py-2">
                         {{ __('site.media') }}
-                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg class="w-3 h-3 transition-transform duration-300 group-hover:rotate-180" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                         </svg>
                     </button>
                     <div
-                        class="absolute hidden group-hover:block bg-white shadow-lg rounded-md py-2 w-48 top-full left-0">
+                        class="nav-dropdown-panel absolute block bg-white shadow-xl rounded-lg py-2 w-48 top-full left-0 border border-gray-50">
                         <a href="{{ route('news.index') }}"
-                            class="block px-4 py-2 hover:bg-gray-50">{{ __('site.news') }}</a>
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.news') }}</a>
                         <a href="{{ route('gallery.index') }}"
-                            class="block px-4 py-2 hover:bg-gray-50">{{ __('site.gallery') }}</a>
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.gallery') }}</a>
                         <a href="{{ route('offers.index') }}"
-                            class="block px-4 py-2 hover:bg-gray-50">{{ __('site.offers') }}</a>
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.offers') }}</a>
                         <a href="{{ route('home') }}#doctors-talk"
-                            class="block px-4 py-2 hover:bg-gray-50">{{ __('site.doctors_talk') }}</a>
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.doctors_talk') }}</a>
                         <a href="{{ route('journals.index') }}"
-                            class="block px-4 py-2 hover:bg-gray-50">{{ __('site.journal') }}</a>
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.journal') }}</a>
                         <a href="{{ route('videos.index') }}"
-                            class="block px-4 py-2 hover:bg-gray-50">{{ __('site.videos') }}</a>
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.videos') }}</a>
                         <a href="{{ route('about.md-message') }}"
-                            class="block px-4 py-2 hover:bg-gray-50">{{ __('site.md_write_up') }}</a>
+                            class="block px-4 py-2 text-sm hover:bg-brand hover:text-white hover:pl-6 transition-all duration-200">{{ __('site.md_write_up') }}</a>
                     </div>
                 </div>
 
                 @php($headerPages = \App\Models\Page::where('is_active', true)->where('show_in_menu', true)->where('menu_location', 'header')->orderBy('sort_order')->get())
                 @foreach ($headerPages as $headerPage)
-                    <a href="{{ route('pages.show', $headerPage) }}"
-                        class="hover:text-brand">{{ $headerPage->title }}</a>
+                    <a href="{{ route('pages.show', $headerPage) }}" class="nav-link">{{ $headerPage->title }}</a>
                 @endforeach
 
-                <a href="{{ route('contact.index') }}" class="hover:text-brand">{{ __('site.contact_us') }}</a>
+                <a href="{{ route('contact.index') }}" class="nav-link">{{ __('site.contact_us') }}</a>
 
 
             </nav>
@@ -138,34 +145,47 @@
                 <input type="text" name="q" placeholder="Search..."
                     class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm">
             </form>
-            <a href="{{ route('home') }}" class="block py-2 border-b">{{ __('site.home') }}</a>
-            <a href="{{ route('about.md-message') }}" class="block py-2 border-b">{{ __('site.md_message') }}</a>
-            <a href="{{ route('about.about-us') }}" class="block py-2 border-b">{{ __('site.about') }}</a>
+            <a href="{{ route('home') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.home') }}</a>
+            <a href="{{ route('about.md-message') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.md_message') }}</a>
+            <a href="{{ route('about.about-us') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.about') }}</a>
             <a href="{{ route('about.accreditation') }}"
-                class="block py-2 border-b">{{ __('site.accreditation') }}</a>
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.accreditation') }}</a>
             <a href="{{ route('about.sister-concerns') }}"
-                class="block py-2 border-b">{{ __('site.sister_concerns') }}</a>
-            <a href="{{ route('doctors.index') }}" class="block py-2 border-b">{{ __('site.doctors') }}</a>
-            <a href="{{ route('departments.index') }}" class="block py-2 border-b">{{ __('site.departments') }}</a>
-            <a href="{{ route('hospitals.index') }}" class="block py-2 border-b">{{ __('site.hospitals') }}</a>
-            <a href="{{ route('diagnostics.index') }}" class="block py-2 border-b">{{ __('site.diagnostics') }}</a>
-            <a href="{{ route('news.index') }}" class="block py-2 border-b">{{ __('site.news') }}</a>
-            <a href="{{ route('gallery.index') }}" class="block py-2 border-b">{{ __('site.gallery') }}</a>
-            <a href="{{ route('offers.index') }}" class="block py-2 border-b">{{ __('site.offers') }}</a>
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.sister_concerns') }}</a>
+            <a href="{{ route('doctors.index') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.doctors') }}</a>
+            <a href="{{ route('departments.index') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.departments') }}</a>
+            <a href="{{ route('hospitals.index') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.hospitals') }}</a>
+            <a href="{{ route('diagnostics.index') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.diagnostics') }}</a>
+            <a href="{{ route('news.index') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.news') }}</a>
+            <a href="{{ route('gallery.index') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.gallery') }}</a>
+            <a href="{{ route('offers.index') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.offers') }}</a>
 
-            <a href="{{ route('videos.index') }}" class="block py-2 border-b">{{ __('site.videos') }}</a>
-            <a href="{{ route('journals.index') }}" class="block py-2 border-b">{{ __('site.journal') }}</a>
+            <a href="{{ route('videos.index') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.videos') }}</a>
+            <a href="{{ route('journals.index') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.journal') }}</a>
 
             @foreach ($headerPages as $headerPage)
                 <a href="{{ route('pages.show', $headerPage) }}"
-                    class="block py-2 border-b">{{ $headerPage->title }}</a>
+                    class="block py-2 border-b active:bg-gray-50 transition-colors">{{ $headerPage->title }}</a>
             @endforeach
 
-            <a href="{{ route('contact.index') }}" class="block py-2">{{ __('site.contact_us') }}</a>
+            <a href="{{ route('contact.index') }}"
+                class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.contact_us') }}</a>
 
         </div>
 
-        <!-- Action Buttons -->
+
         <!-- Action Buttons -->
         <div class="flex flex-wrap gap-2 pb-4">
             <a href="{{ route('appointment.create') }}"
@@ -182,33 +202,37 @@
             </a>
             <a href="{{ route('ambulance.create') }}"
                 class="flex-1 min-w-[140px] text-center bg-red-500 text-white py-2.5 px-3 rounded-md text-sm font-medium hover:bg-red-600 transition">
-                🚑 Ambulance
+                🚑 {{ __('site.ambulance') }}
             </a>
 
             <div class="relative flex-1 min-w-[140px]" x-data="{ open: false }">
                 <button @click="open = !open" @click.outside="open = false"
                     class="w-full text-center bg-gray-100 text-gray-800 py-2.5 px-3 rounded-md text-sm font-medium hover:bg-gray-200 transition flex items-center justify-center gap-1">
-                    More Services
+                    {{ __('site.more_services') }}
                     <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                     </svg>
                 </button>
                 <div x-show="open" x-cloak x-transition
-                    class="absolute left-0 mt-2 w-56 bg-white dark:bg-gray-900 rounded-md shadow-lg border border-gray-100 dark:border-gray-800 py-2 z-40">
+                    class="absolute left-0 mt-2 w-56 bg-white dark:bg-gray-900 rounded-md shadow-lg border border-gray-100 dark:border-gray-800 py-2 z-30">
                     <a href="{{ route('video-consultation.create') }}"
-                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">📹 Video
-                        Consultation</a>
+                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">📹
+                        {{ __('site.video_consultation') }}</a>
                     <a href="{{ route('blood-bank.index') }}"
-                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">🩸 Blood Bank</a>
+                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">🩸
+                        {{ __('site.blood_bank') }}</a>
                     <a href="{{ route('locations.index') }}"
-                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">📍 Our Locations</a>
+                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">📍
+                        {{ __('site.our_location') }}</a>
                     <a href="{{ route('beds.index') }}"
-                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">🛏️ Bed
-                        Availability</a>
+                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">🛏️
+                        {{ __('site.bed_availability') }}</a>
                     <a href="{{ route('queue.index') }}" target="_blank"
-                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">📺 Live Queue</a>
+                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">📺
+                        {{ __('site.live_queue') }}</a>
                     <a href="{{ route('pharmacy.index') }}"
-                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">💊 Pharmacy</a>
+                        class="block px-4 py-2 text-sm hover:bg-gray-50 dark:hover:bg-gray-800">💊
+                        {{ __('site.pharmacy') }}</a>
                 </div>
             </div>
         </div>

@@ -72,6 +72,13 @@ use App\Http\Controllers\Front\QueueController;
 use App\Http\Controllers\Admin\MedicineController as AdminMedicineController;
 use App\Http\Controllers\Admin\MedicineSaleController;
 use App\Http\Controllers\Front\MedicineController;
+use App\Http\Controllers\Admin\JobApplicationController;
+use App\Http\Controllers\Admin\JobPostingController as AdminJobPostingController;
+use App\Http\Controllers\Admin\NoticeController as AdminNoticeController;
+use App\Http\Controllers\Front\CareerController;
+use App\Http\Controllers\Front\NoticeController;
+use App\Http\Controllers\Admin\ShowcaseItemController;
+use App\Http\Controllers\Front\ShowcaseController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -92,6 +99,10 @@ Route::get('/about/md-message', [PageController::class, 'mdMessage'])->name('abo
 Route::get('/about/about-us', [PageController::class, 'about'])->name('about.about-us');
 Route::get('/about/accreditation', [PageController::class, 'accreditation'])->name('about.accreditation');
 Route::get('/about/sister-concerns', [PageController::class, 'sisterConcerns'])->name('about.sister-concerns');
+Route::get('/about/corporate-tieup', [ShowcaseController::class, 'corporate'])->name('about.corporate');
+Route::get('/about/awards', [ShowcaseController::class, 'awards'])->name('about.awards');
+Route::get('/about/csr', [ShowcaseController::class, 'csr'])->name('about.csr');
+
 
 // Doctors
 Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
@@ -143,6 +154,15 @@ Route::post('/book-appointment', [AppointmentController::class, 'store'])->name(
 
 Route::get('/doctors/{doctor}/available-dates', [SlotController::class, 'availableDates'])->name('slots.dates');
 Route::get('/doctors/{doctor}/slots', [SlotController::class, 'slots'])->name('slots.index');
+
+// Career
+Route::get('/career', [CareerController::class, 'index'])->name('career.index');
+Route::get('/career/{jobPosting}', [CareerController::class, 'show'])->name('career.show');
+Route::post('/career/{jobPosting}/apply', [CareerController::class, 'apply'])->name('career.apply');
+
+// Notice
+Route::get('/notices', [NoticeController::class, 'index'])->name('notices.index');
+Route::get('/notices/{notice}', [NoticeController::class, 'show'])->name('notices.show');
 
 // Online Report
 Route::get('/online-report', [OnlineReportController::class, 'index'])->name('online-report.index');
@@ -229,8 +249,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
     Route::post('login', [AdminAuthController::class, 'login'])->name('login.submit');
 
     Route::middleware('admin.auth')->group(function () {
+
+        // Dashboard
         Route::post('logout', [AdminAuthController::class, 'logout'])->name('logout');
         Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+        //doctors
         Route::resource('doctors', AdminDoctorController::class)->except('show');
         Route::get('doctors/{doctor}/schedule', [DoctorScheduleController::class, 'index'])->name('doctors.schedule');
         Route::post('doctors/{doctor}/schedule', [DoctorScheduleController::class, 'store'])->name('doctors.schedule.store');
@@ -238,6 +262,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::patch('doctors/{doctor}/schedule/{schedule}/toggle', [DoctorScheduleController::class, 'toggleActive'])->name('doctors.schedule.toggle');
         Route::post('doctors/{doctor}/leave', [DoctorScheduleController::class, 'storeLeave'])->name('doctors.leave.store');
         Route::delete('doctors/{doctor}/leave/{leave}', [DoctorScheduleController::class, 'destroyLeave'])->name('doctors.leave.destroy');
+
+        //show
         Route::resource('departments', AdminDepartmentController::class)->except('show');
         Route::resource('hospitals', AdminHospitalController::class)->except('show');
         Route::resource('diagnostics', AdminDiagnosticController::class)->except('show');
@@ -251,13 +277,14 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::resource('sliders', AdminSliderController::class)->except('show');
         Route::resource('sister-concerns', AdminSisterConcernController::class)->except('show');
 
+
+        //appointments
         Route::get('appointments', [AdminAppointmentController::class, 'index'])->name('appointments.index');
         Route::patch('appointments/{appointment}', [AdminAppointmentController::class, 'update'])->name('appointments.update');
         Route::delete('appointments/{appointment}', [AdminAppointmentController::class, 'destroy'])->name('appointments.destroy');
 
         //medicine
         Route::resource('medicines', AdminMedicineController::class)->except('show');
-
         Route::get('medicine-sales', [MedicineSaleController::class, 'index'])->name('medicine-sales.index');
         Route::get('medicine-sales/create', [MedicineSaleController::class, 'create'])->name('medicine-sales.create');
         Route::post('medicine-sales', [MedicineSaleController::class, 'store'])->name('medicine-sales.store');
@@ -265,25 +292,34 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
         //ambulance
         Route::resource('ambulances', AdminAmbulanceController::class)->except('show');
-
         Route::get('ambulance-requests', [AdminAmbulanceRequestController::class, 'index'])->name('ambulance-requests.index');
         Route::put('ambulance-requests/{ambulance_request}', [AdminAmbulanceRequestController::class, 'update'])->name('ambulance-requests.update');
         Route::delete('ambulance-requests/{ambulance_request}', [AdminAmbulanceRequestController::class, 'destroy'])->name('ambulance-requests.destroy');
 
+        //messages
         Route::get('messages', [AdminMessageController::class, 'index'])->name('messages.index');
         Route::patch('messages/{message}/read', [AdminMessageController::class, 'markRead'])->name('messages.read');
         Route::delete('messages/{message}', [AdminMessageController::class, 'destroy'])->name('messages.destroy');
 
+        //settings
         Route::get('settings', [AdminSettingController::class, 'edit'])->name('settings.edit');
         Route::put('settings', [AdminSettingController::class, 'update'])->name('settings.update');
 
+        //showcase
+        Route::resource('showcase-items', ShowcaseItemController::class)->except('show');
+
+
+        //backups
         Route::get('backups', [BackupController::class, 'index'])->name('backups.index');
         Route::post('backups', [BackupController::class, 'create'])->name('backups.create');
         Route::get('backups/{filename}/download', [BackupController::class, 'download'])->name('backups.download');
         Route::delete('backups/{filename}', [BackupController::class, 'destroy'])->name('backups.destroy');
 
+        //online reports
         Route::resource('online-reports', AdminOnlineReportController::class)->except('show');
 
+
+        //comments
         Route::get('comments', [AdminCommentController::class, 'index'])->name('comments.index');
         Route::post('comments/{comment}/reply', [AdminCommentController::class, 'reply'])->name('comments.reply');
         Route::patch('comments/{comment}/approve', [AdminCommentController::class, 'approve'])->name('comments.approve');
@@ -296,6 +332,8 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::put('bed-categories/{bed_category}', [AdminBedCategoryController::class, 'update'])->name('bed-categories.update');
         Route::delete('bed-categories/{bed_category}', [AdminBedCategoryController::class, 'destroy'])->name('bed-categories.destroy');
 
+
+        //queue displays
         Route::get('queue-displays', [AdminQueueDisplayController::class, 'index'])->name('queue-displays.index');
         Route::put('queue-displays/{doctor}', [AdminQueueDisplayController::class, 'update'])->name('queue-displays.update');
 
@@ -306,36 +344,63 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::patch('blood-donors/{donor}/available', [AdminBloodBankController::class, 'toggleAvailable'])->name('blood-donors.available');
         Route::delete('blood-donors/{donor}', [AdminBloodBankController::class, 'destroyDonor'])->name('blood-donors.destroy');
 
+
+        //blood requests
         Route::get('blood-requests', [AdminBloodBankController::class, 'requests'])->name('blood-requests.index');
         Route::patch('blood-requests/{request}/fulfill', [AdminBloodBankController::class, 'toggleFulfilled'])->name('blood-requests.fulfill');
         Route::delete('blood-requests/{request}', [AdminBloodBankController::class, 'destroyRequest'])->name('blood-requests.destroy');
 
 
+        //notifications
         Route::get('notifications', [AdminNotificationController::class, 'index'])->name('notifications.index');
         Route::get('notifications/recent', [AdminNotificationController::class, 'recent'])->name('notifications.recent');
         Route::post('notifications/mark-all-read', [AdminNotificationController::class, 'markAllRead'])->name('notifications.mark-all-read');
         Route::get('notifications/{notification}/read', [AdminNotificationController::class, 'markRead'])->name('notifications.read');
 
 
+        //hospital stats
         Route::resource('hospital-stats', HospitalStatController::class)->except('show');
         Route::get('hospital-stats-reports', [HospitalReportController::class, 'index'])->name('hospital-stats.reports');
 
+
+        //invoices
         Route::resource('invoices', InvoiceController::class);
         Route::get('invoices/{invoice}/pdf', [InvoicePdfController::class, 'download'])->name('invoices.pdf');
 
+
+        //payments
         Route::get('payments', [AdminPaymentController::class, 'index'])->name('payments.index');
 
+
+        //about
         Route::get('about-content', [AboutContentController::class, 'edit'])->name('about-content.edit');
         Route::put('about-content', [AboutContentController::class, 'update'])->name('about-content.update');
         Route::resource('accreditations', AccreditationController::class)->except('show');
 
+
+        //pages
         Route::resource('pages', AdminPageController::class)->except('show');
 
 
+        //video consultations
         Route::get('video-consultations', [AdminVideoConsultationController::class, 'index'])->name('video-consultations.index');
         Route::get('video-consultations/{video_consultation}/edit', [AdminVideoConsultationController::class, 'edit'])->name('video-consultations.edit');
         Route::put('video-consultations/{video_consultation}', [AdminVideoConsultationController::class, 'update'])->name('video-consultations.update');
         Route::delete('video-consultations/{video_consultation}', [AdminVideoConsultationController::class, 'destroy'])->name('video-consultations.destroy');
+
+
+        //job postings
+        Route::resource('job-postings', AdminJobPostingController::class)->except('show');
+
+        //job applications
+        Route::get('job-applications', [JobApplicationController::class, 'index'])->name('job-applications.index');
+        Route::patch('job-applications/{job_application}', [JobApplicationController::class, 'updateStatus'])->name('job-applications.update');
+        Route::delete('job-applications/{job_application}', [JobApplicationController::class, 'destroy'])->name('job-applications.destroy');
+
+
+        //notices
+        Route::resource('notices', AdminNoticeController::class)->except('show');
+
 
         // শুধু Super Admin access করতে পারবে
         Route::middleware('admin.role:super_admin')->group(function () {

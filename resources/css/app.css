@@ -60,6 +60,31 @@
     }
 }
 
+.nav-link {
+    @apply relative px-1 py-2 transition-all duration-300;
+}
+.nav-link::after {
+    content: "";
+    @apply absolute left-0 bottom-0 w-0 h-0.5 bg-brand transition-all duration-300 ease-out;
+}
+.nav-link:hover::after {
+    @apply w-full;
+}
+.nav-link:hover {
+    @apply text-brand -translate-y-0.5;
+}
+
+.nav-dropdown-trigger {
+    @apply relative transition-colors duration-200;
+}
+
+.nav-dropdown-panel {
+    @apply opacity-0 invisible -translate-y-2 scale-95 transition-all duration-200 ease-out origin-top z-50;
+}
+.group:hover .nav-dropdown-panel {
+    @apply opacity-100 visible translate-y-0 scale-100;
+}
+
 /* ============== Theme-aware components & utility overrides (brand color + font, runtime dynamic) ============== */
 h1,
 h2,

@@ -253,12 +253,12 @@
         <section class="bg-white py-16">
             <div class="max-w-7xl mx-auto px-4">
                 <h2 class="section-title">{{ __('site.sister_concerns') }}</h2>
-                <div class="flex flex-wrap justify-center items-center gap-10">
+                <div class="flex justify-center items-center gap-5">
                     @foreach ($sisterConcerns as $sc)
                         <a href="{{ $sc->website_url ?? '#' }}" target="_blank"
                             class="opacity-70 hover:opacity-100 transition">
                             <img src="{{ $sc->logo ? asset('storage/' . $sc->logo) : 'https://placehold.co/150x80?text=' . urlencode($sc->name) }}"
-                                class="h-16" loading="lazy" alt="{{ $sc->name }}">
+                                class="h-40" loading="lazy" alt="{{ $sc->name }}">
                         </a>
                     @endforeach
                 </div>
