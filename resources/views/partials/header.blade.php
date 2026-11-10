@@ -131,16 +131,10 @@
                 </svg>
             </button>
 
-            <button id="mobile-menu-btn" class="lg:hidden p-2">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-            </button>
         </div>
 
         <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden lg:hidden pb-4 space-y-2 text-sm font-medium text-gray-700">
+        {{-- <div id="mobile-menu" class="hidden lg:hidden pb-4 space-y-2 text-sm font-medium text-gray-700">
             <form action="{{ route('search.index') }}" method="GET" class="pb-3 border-b">
                 <input type="text" name="q" placeholder="Search..."
                     class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm">
@@ -183,8 +177,91 @@
             <a href="{{ route('contact.index') }}"
                 class="block py-2 border-b active:bg-gray-50 transition-colors">{{ __('site.contact_us') }}</a>
 
-        </div>
+        </div> --}}
 
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden lg:hidden pb-4 space-y-1 text-sm font-medium text-gray-700 max-h-[70vh] overflow-y-auto">
+            <a href="{{ route('home') }}" class="block py-2 border-b active:bg-gray-50">{{ __('site.home') }}</a>
+
+            <p class="pt-3 pb-1 text-xs text-gray-400 uppercase tracking-wide">{{ __('site.about_us') }}</p>
+            <a href="{{ route('about.md-message') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.md_message') }}</a>
+            <a href="{{ route('about.about-us') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.about') }}</a>
+            <a href="{{ route('about.accreditation') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.accreditation') }}</a>
+            <a href="{{ route('about.sister-concerns') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.sister_concerns') }}</a>
+            <a href="{{ route('about.corporate') }}" class="block py-2 border-b active:bg-gray-50">Corporate
+                Tie-ups</a>
+            <a href="{{ route('about.awards') }}" class="block py-2 border-b active:bg-gray-50">Awards &
+                Recognition</a>
+            <a href="{{ route('about.csr') }}" class="block py-2 border-b active:bg-gray-50">CSR</a>
+
+            <p class="pt-3 pb-1 text-xs text-gray-400 uppercase tracking-wide">Healthcare</p>
+            <a href="{{ route('doctors.index') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.doctors') }}</a>
+            <a href="{{ route('departments.index') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.departments') }}</a>
+            <a href="{{ route('hospitals.index') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.hospitals') }}</a>
+            <a href="{{ route('diagnostics.index') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.diagnostics') }}</a>
+            <a href="{{ route('packages.index') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.packages_vaccines') }}</a>
+            <a href="{{ route('tests.index') }}" class="block py-2 border-b active:bg-gray-50">Diagnostic Tests</a>
+            <a href="{{ route('pharmacy.index') }}" class="block py-2 border-b active:bg-gray-50">💊 Pharmacy</a>
+
+            <p class="pt-3 pb-1 text-xs text-gray-400 uppercase tracking-wide">Appointments & Services</p>
+            <a href="{{ route('appointment.create') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.book_appointment') }}</a>
+            <a href="{{ route('video-consultation.create') }}" class="block py-2 border-b active:bg-gray-50">📹 Video
+                Consultation</a>
+            <a href="{{ route('online-report.index') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.online_report') }}</a>
+            <a href="{{ route('ambulance.create') }}" class="block py-2 border-b active:bg-gray-50">🚑 Ambulance</a>
+            <a href="{{ route('blood-bank.index') }}" class="block py-2 border-b active:bg-gray-50">🩸 Blood Bank</a>
+            <a href="{{ route('beds.index') }}" class="block py-2 border-b active:bg-gray-50">🛏️ Bed
+                Availability</a>
+            <a href="{{ route('queue.index') }}" target="_blank" class="block py-2 border-b active:bg-gray-50">📺
+                Live Queue</a>
+            <a href="{{ route('locations.index') }}" class="block py-2 border-b active:bg-gray-50">📍 Our
+                Locations</a>
+
+            <p class="pt-3 pb-1 text-xs text-gray-400 uppercase tracking-wide">{{ __('site.media') }}</p>
+            @foreach ($headerPages as $headerPage)
+                <a href="{{ route('pages.show', $headerPage) }}"
+                    class="block py-2 border-b active:bg-gray-50">{{ $headerPage->title }}</a>
+            @endforeach
+            <a href="{{ route('news.index') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.news') }}</a>
+            <a href="{{ route('gallery.index') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.gallery') }}</a>
+            <a href="{{ route('offers.index') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.offers') }}</a>
+            <a href="{{ route('videos.index') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.videos') }}</a>
+            <a href="{{ route('journals.index') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.journal') }}</a>
+
+            <p class="pt-3 pb-1 text-xs text-gray-400 uppercase tracking-wide">More</p>
+            <a href="{{ route('career.index') }}" class="block py-2 border-b active:bg-gray-50">Career</a>
+            <a href="{{ route('notices.index') }}" class="block py-2 border-b active:bg-gray-50">Notice Board</a>
+            <a href="{{ route('contact.index') }}"
+                class="block py-2 border-b active:bg-gray-50">{{ __('site.contact_us') }}</a>
+
+            @if (auth('patient')->check())
+                <a href="{{ route('patient.dashboard') }}"
+                    class="block py-2 border-b active:bg-gray-50 text-brand font-semibold">📊 My Account</a>
+                <form action="{{ route('patient.logout') }}" method="POST" class="pt-1">
+                    @csrf
+                    <button class="block w-full text-left py-2 text-red-600">Logout</button>
+                </form>
+            @else
+                <a href="{{ route('patient.login') }}" class="block py-2 text-brand font-semibold">Patient Login</a>
+            @endif
+        </div>
 
         <!-- Action Buttons -->
         <div class="flex flex-wrap gap-2 pb-4">

@@ -6,6 +6,7 @@ use App\Http\Middleware\EnsureAdminRole;
 use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Application;
 use App\Http\Middleware\PatientAuth;
+use App\Http\Middleware\DoctorAuth;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -20,6 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin.auth' => AdminAuth::class,
             'admin.role' => EnsureAdminRole::class,
             'patient.auth' => PatientAuth::class,
+            'doctor.auth' => DoctorAuth::class,
         ]);
 
         $middleware->web(append: [

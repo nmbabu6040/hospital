@@ -2,15 +2,18 @@
 
 namespace App\Models;
 
+use App\Traits\LogsActivity;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Doctor extends Model
+class Doctor extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, LogsActivity;
 
     protected $fillable = [
         'name',
+        'email',
+        'password',
         'slug',
         'designation',
         'degree',
@@ -25,10 +28,13 @@ class Doctor extends Model
         'meta_description',
     ];
 
+    protected $hidden = ['password'];
+
     protected function casts(): array
     {
         return [
             'is_active' => 'boolean',
+            'password' => 'hashed',
         ];
     }
 
@@ -52,6 +58,11 @@ class Doctor extends Model
         return $this->belongsTo(Branch::class);
     }
 
+    public function appointments()
+    {
+        return $this->hasMany(Appointment::class);
+    }
+
     public function schedules()
     {
         return $this->hasMany(DoctorSchedule::class);
@@ -62,9 +73,36 @@ class Doctor extends Model
         return $this->hasMany(DoctorLeave::class);
     }
 
-    public function appointments()
+    public function reviews()
     {
-        return $this->hasMany(Appointment::class);
+        return $this->hasMany(DoctorReview::class);
+    }
+
+    public function approvedReviews()
+    {
+        return $this->hasMany(DoctorReview::class)->approved()->latest();
+    }
+
+    public function averageRating(): float
+    {
+        return round($this->approvedReviews()->avg('rating') ?? 0, 1);
+    }
+
+    public function reviewCount(): int
+    {
+        return $this->approvedReviews()->count();
+    }
+
+    public function ratingBreakdown(): array
+    {
+        $breakdown = [5 => 0, 4 => 0, 3 => 0, 2 => 0, 1 => 0];
+        $counts = $this->approvedReviews()->selectRaw('rating, count(*) as total')->groupBy('rating')->pluck('total', 'rating');
+
+        foreach ($counts as $rating => $count) {
+            $breakdown[$rating] = $count;
+        }
+
+        return $breakdown;
     }
 
     public function queueDisplay()

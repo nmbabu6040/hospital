@@ -16,6 +16,17 @@
                 class="w-full border border-gray-200 rounded-md px-4 py-2.5">
         </div>
 
+        <div>
+            <label class="block text-sm font-medium mb-1">Login Email (Doctor Portal-এর জন্য, ঐচ্ছিক)</label>
+            <input type="email" name="email" value="{{ old('email', $doctor->email) }}"
+                class="w-full border border-gray-200 rounded-md px-4 py-2.5">
+        </div>
+        <div>
+            <label class="block text-sm font-medium mb-1">Login Password
+                ({{ $doctor->exists ? 'ফাঁকা রাখলে পুরনো থাকবে' : 'সেট করলে Doctor Portal-এ লগইন করতে পারবে' }})</label>
+            <input type="password" name="password" class="w-full border border-gray-200 rounded-md px-4 py-2.5">
+        </div>
+
         <div class="grid grid-cols-2 gap-5">
             <div>
                 <label class="block text-sm font-medium mb-1">Designation</label>

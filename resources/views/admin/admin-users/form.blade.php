@@ -60,6 +60,12 @@
             Active
         </label>
 
+        <label class="flex items-center gap-2 text-sm">
+            <input type="checkbox" name="two_factor_enabled" value="1"
+                {{ old('two_factor_enabled', $adminUser->two_factor_enabled) ? 'checked' : '' }}>
+            Enable Two-Factor Authentication (Email OTP)
+        </label>
+
         <button type="submit" class="btn-primary">Save</button>
     </form>
 

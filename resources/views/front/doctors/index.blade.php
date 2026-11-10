@@ -38,6 +38,12 @@
                         <h3 class="font-semibold text-sm">{{ $doctor->name }}</h3>
                         <p class="text-xs text-gray-500 mt-1">{{ $doctor->designation }}</p>
                         <p class="text-xs text-brand mt-1">{{ $doctor->department?->name }}</p>
+                        @if ($doctor->reviewCount() > 0)
+                            <div class="flex items-center gap-1 mt-2">
+                                @include('partials.star-rating', ['rating' => $doctor->averageRating()])
+                                <span class="text-xs text-gray-400">({{ $doctor->reviewCount() }})</span>
+                            </div>
+                        @endif
                     </div>
                 </a>
             @empty

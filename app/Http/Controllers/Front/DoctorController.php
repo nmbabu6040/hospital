@@ -37,7 +37,9 @@ class DoctorController extends Controller
     public function show(Doctor $doctor)
     {
         $doctor->load(['department', 'hospital']);
+        $reviews = $doctor->approvedReviews()->paginate(10);
+        $ratingBreakdown = $doctor->ratingBreakdown();
 
-        return view('front.doctors.show', compact('doctor'));
+        return view('front.doctors.show', compact('doctor', 'reviews', 'ratingBreakdown'));
     }
 }

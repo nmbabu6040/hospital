@@ -52,6 +52,12 @@ class DoctorController extends Controller
             $data['branch_id'] = $admin->branch_id;
         }
 
+        if (! empty($data['password'])) {
+            $data['password'] = \Illuminate\Support\Facades\Hash::make($data['password']);
+        } else {
+            unset($data['password']);
+        }
+
         Doctor::create($data);
 
         return redirect()->route('admin.doctors.index')->with('success', 'Doctor added successfully.');
@@ -84,6 +90,12 @@ class DoctorController extends Controller
         $admin = auth('admin')->user();
         if ($admin->isBranchAdmin() && $admin->branch_id) {
             $data['branch_id'] = $admin->branch_id;
+        }
+
+        if (! empty($data['password'])) {
+            $data['password'] = \Illuminate\Support\Facades\Hash::make($data['password']);
+        } else {
+            unset($data['password']);
         }
 
         $doctor->update($data);
@@ -132,6 +144,8 @@ class DoctorController extends Controller
             'chamber_time' => ['nullable', 'string', 'max:255'],
             'bio' => ['nullable', 'string'],
             'image' => ['nullable', 'image', 'max:2048'],
+            'email' => ['nullable', 'email', 'unique:doctors,email' . ($request->route('doctor') ? ',' . $request->route('doctor')->id : '')],
+            'password' => ['nullable', 'string', 'min:6'],
             'is_active' => ['nullable', 'boolean'],
             'meta_title' => ['nullable', 'string', 'max:255'],
             'meta_description' => ['nullable', 'string', 'max:500'],

@@ -9,7 +9,7 @@ class Admin extends Authenticatable
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'email', 'password', 'role', 'branch_id', 'is_active'];
+    protected $fillable = ['name', 'email', 'password', 'role', 'branch_id', 'is_active', 'two_factor_enabled'];
 
     protected $hidden = ['password', 'remember_token'];
 
@@ -18,6 +18,7 @@ class Admin extends Authenticatable
         return [
             'password' => 'hashed',
             'is_active' => 'boolean',
+            'two_factor_enabled' => 'boolean',
         ];
     }
 

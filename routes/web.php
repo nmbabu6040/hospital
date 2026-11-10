@@ -79,6 +79,11 @@ use App\Http\Controllers\Front\CareerController;
 use App\Http\Controllers\Front\NoticeController;
 use App\Http\Controllers\Admin\ShowcaseItemController;
 use App\Http\Controllers\Front\ShowcaseController;
+use App\Http\Controllers\Admin\ActivityLogController;
+use App\Http\Controllers\Doctor\AuthController as DoctorAuthController;
+use App\Http\Controllers\Doctor\DashboardController as DoctorDashboardController;
+use App\Http\Controllers\Admin\DoctorReviewController as AdminDoctorReviewController;
+use App\Http\Controllers\Front\DoctorReviewController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -107,6 +112,8 @@ Route::get('/about/csr', [ShowcaseController::class, 'csr'])->name('about.csr');
 // Doctors
 Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
 Route::get('/doctors/{doctor}', [DoctorController::class, 'show'])->name('doctors.show');
+
+Route::post('/doctors/{doctor}/reviews', [DoctorReviewController::class, 'store'])->name('doctor-reviews.store');
 
 // Departments
 Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
@@ -237,6 +244,20 @@ Route::prefix('patient')->name('patient.')->group(function () {
     });
 });
 
+
+Route::prefix('doctor')->name('doctor.')->group(function () {
+    Route::get('login', [DoctorAuthController::class, 'showLogin'])->name('login');
+    Route::post('login', [DoctorAuthController::class, 'login'])->name('login.submit');
+
+    Route::middleware('doctor.auth')->group(function () {
+        Route::post('logout', [DoctorAuthController::class, 'logout'])->name('logout');
+        Route::get('dashboard', [DoctorDashboardController::class, 'index'])->name('dashboard');
+        Route::get('appointments', [DoctorDashboardController::class, 'appointments'])->name('appointments');
+        Route::patch('appointments/{appointment}', [DoctorDashboardController::class, 'updateAppointmentStatus'])->name('appointments.update');
+        Route::get('schedule', [DoctorDashboardController::class, 'schedule'])->name('schedule');
+    });
+});
+
 /*
 |--------------------------------------------------------------------------
 | Admin Routes
@@ -247,6 +268,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     Route::get('login', [AdminAuthController::class, 'showLogin'])->name('login');
     Route::post('login', [AdminAuthController::class, 'login'])->name('login.submit');
+
+    Route::get('2fa', [AdminAuthController::class, 'showTwoFactor'])->name('2fa.show');
+    Route::post('2fa', [AdminAuthController::class, 'verifyTwoFactor'])->name('2fa.verify');
 
     Route::middleware('admin.auth')->group(function () {
 
@@ -325,6 +349,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::patch('comments/{comment}/approve', [AdminCommentController::class, 'approve'])->name('comments.approve');
         Route::patch('comments/{comment}/reject', [AdminCommentController::class, 'reject'])->name('comments.reject');
         Route::delete('comments/{comment}', [AdminCommentController::class, 'destroy'])->name('comments.destroy');
+
+        //doctor reviews
+        Route::get('doctor-reviews', [AdminDoctorReviewController::class, 'index'])->name('doctor-reviews.index');
+        Route::patch('doctor-reviews/{doctor_review}/approve', [AdminDoctorReviewController::class, 'approve'])->name('doctor-reviews.approve');
+        Route::patch('doctor-reviews/{doctor_review}/reject', [AdminDoctorReviewController::class, 'reject'])->name('doctor-reviews.reject');
+        Route::delete('doctor-reviews/{doctor_review}', [AdminDoctorReviewController::class, 'destroy'])->name('doctor-reviews.destroy');
 
         //bed availability
         Route::get('bed-categories', [AdminBedCategoryController::class, 'index'])->name('bed-categories.index');
@@ -406,6 +436,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::middleware('admin.role:super_admin')->group(function () {
             Route::resource('branches', BranchController::class)->except('show');
             Route::resource('admin-users', AdminUserController::class)->except('show');
+            Route::get('activity-logs', [ActivityLogController::class, 'index'])->name('activity-logs.index');
         });
     });
 });
