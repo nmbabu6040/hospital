@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @php($seoSetting = \App\Models\Setting::get())
+    @php($themeSetting = \App\Models\Setting::get())
     <title>@yield('title', 'Hospital') @if ($seoSetting->site_meta_title_suffix)
             {{ $seoSetting->site_meta_title_suffix }}
         @else
@@ -12,6 +13,8 @@
         @endif
     </title>
     <meta name="description" content="@yield('meta_description', $seoSetting->default_meta_description ?: 'Leading multi-disciplinary hospital providing world-class healthcare services.')">
+
+
 
     {{-- Open Graph tags --}}
     <meta property="og:title" content="@yield('title', config('app.name'))">
@@ -46,7 +49,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-    @php($themeSetting = \App\Models\Setting::get())
+    {{-- @php($themeSetting = \App\Models\Setting::get()) --}}
     <style>
         :root {
             --color-brand: {{ $themeSetting->themePrimaryColor() }};
@@ -133,6 +136,7 @@
         {!! $seoSetting->custom_head_scripts !!}
     @endif
 
+    <script defer src="https://cdn.jsdelivr.net/npm/@alpinejs/collapse@3.14.1/dist/cdn.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js"></script>
 </head>
 
@@ -181,6 +185,8 @@
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
         </svg>
     </button>
+
+    @include('partials.accessibility-widget')
 
     <script>
         // Mobile menu toggle
@@ -288,6 +294,14 @@
             })();
         </script>
     @endif
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(() => {});
+            });
+        }
+    </script>
 </body>
 
 </html>

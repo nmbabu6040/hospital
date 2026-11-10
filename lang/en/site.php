@@ -63,4 +63,6 @@ return [
     'notice_board' => 'Notice Board',
     'privacy_policy' => 'Privacy Policy',
     'terms_&_conditions' => 'Terms & Conditions',
+    'faq' => 'FAQ',
+
 ];

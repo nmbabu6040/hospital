@@ -278,3 +278,31 @@ h6 {
 .floating-btn {
     @apply fixed w-12 h-12 rounded-full shadow-lg flex items-center justify-center text-white transition-all duration-300 z-40;
 }
+
+/* ============== Accessibility ============== */
+html.font-large body {
+    font-size: 112.5%;
+}
+html.font-xlarge body {
+    font-size: 125%;
+}
+
+html.high-contrast body {
+    background: #000 !important;
+    color: #fff !important;
+}
+html.high-contrast .bg-white {
+    background: #111 !important;
+    color: #fff !important;
+}
+html.high-contrast .text-gray-600,
+html.high-contrast .text-gray-500 {
+    color: #ddd !important;
+}
+html.high-contrast a {
+    color: #ffeb3b !important;
+}
+html.high-contrast .btn-primary {
+    background: #ffeb3b !important;
+    color: #000 !important;
+}

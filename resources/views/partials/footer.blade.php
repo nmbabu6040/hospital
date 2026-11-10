@@ -1,6 +1,25 @@
 @php($setting = \App\Models\Setting::get())
 
 <footer class="bg-gray-900 text-gray-300 mt-16">
+
+    <div class="bg-brand-dark py-8">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div>
+                <h3 class="text-white font-semibold text-lg">Subscribe to our Newsletter</h3>
+                <p class="text-gray-300 text-sm">সর্বশেষ স্বাস্থ্য টিপস ও অফার পেতে সাবস্ক্রাইব করুন</p>
+            </div>
+            <form action="{{ route('newsletter.subscribe') }}" method="POST" class="flex gap-2 w-full md:w-auto">
+                @csrf
+                <input type="email" name="email" placeholder="Your email address" required
+                    class="flex-1 md:w-64 border-0 rounded-md px-4 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-white">
+                <button type="submit"
+                    class="bg-white text-brand px-5 py-2.5 rounded-md text-sm font-medium hover:bg-gray-100 transition whitespace-nowrap">Subscribe</button>
+            </form>
+        </div>
+        @if (session('success'))
+            <p class="text-center text-white text-sm mt-3">{{ session('success') }}</p>
+        @endif
+    </div>
     <div class="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-4 gap-8">
 
         <div>
@@ -72,6 +91,8 @@
                 <li><a href="{{ route('career.index') }}" class="hover:text-white">{{ __('site.career') }}</a></li>
                 <li><a href="{{ route('notices.index') }}" class="hover:text-white">{{ __('site.notice_board') }}</a>
                 </li>
+                <!-- Footer, Useful Links সেকশনে -->
+                <li><a href="{{ route('faq.index') }}" class="hover:text-white">FAQ</a></li>
                 @php($footerPages = \App\Models\Page::where('is_active', true)->where('show_in_menu', true)->where('menu_location', 'footer')->orderBy('sort_order')->get())
                 @foreach ($footerPages as $footerPage)
                     <li><a href="{{ route('pages.show', $footerPage) }}"

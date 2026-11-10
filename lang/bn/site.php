@@ -63,5 +63,6 @@ return [
     'notice_board' => 'নোটিশ বোর্ড',
     'privacy_policy' => 'গোপনীয়তা নীতি',
     'terms_&_conditions' => 'শর্তাবলী',
+    'faq' => 'প্রশ্ন ও উত্তর',
 
 ];

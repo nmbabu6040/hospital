@@ -48,13 +48,14 @@ class SettingController extends Controller
             'custom_head_scripts' => ['nullable', 'string'],
             'theme_primary_color' => ['nullable', 'string', 'regex:/^#[0-9A-Fa-f]{6}$/'],
             'theme_font' => ['nullable', 'string', 'in:Poppins,Hind Siliguri,Inter,Roboto,Nunito,Open Sans,Noto Sans Bengali,Lato'],
-
+            'google_business_profile_url' => ['nullable', 'url', 'max:255'],
+            'google_rating' => ['nullable', 'numeric', 'min:0', 'max:5'],
+            'google_review_count' => ['nullable', 'integer', 'min:0'],
             'sms_enabled' => ['nullable', 'boolean'],
             'sms_api_url' => ['nullable', 'url', 'max:255'],
             'sms_api_key' => ['nullable', 'string', 'max:255'],
             'sms_sender_id' => ['nullable', 'string', 'max:50'],
             'email_notifications_enabled' => ['nullable', 'boolean'],
-
             'live_chat_enabled' => ['nullable', 'boolean'],
             'tawk_to_property_id' => ['nullable', 'string', 'max:100'],
             'tawk_to_widget_id' => ['nullable', 'string', 'max:100'],

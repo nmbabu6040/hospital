@@ -84,6 +84,10 @@ use App\Http\Controllers\Doctor\AuthController as DoctorAuthController;
 use App\Http\Controllers\Doctor\DashboardController as DoctorDashboardController;
 use App\Http\Controllers\Admin\DoctorReviewController as AdminDoctorReviewController;
 use App\Http\Controllers\Front\DoctorReviewController;
+use App\Http\Controllers\Admin\NewsletterSubscriberController;
+use App\Http\Controllers\Front\NewsletterController;
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Front\FaqController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -112,7 +116,6 @@ Route::get('/about/csr', [ShowcaseController::class, 'csr'])->name('about.csr');
 // Doctors
 Route::get('/doctors', [DoctorController::class, 'index'])->name('doctors.index');
 Route::get('/doctors/{doctor}', [DoctorController::class, 'show'])->name('doctors.show');
-
 Route::post('/doctors/{doctor}/reviews', [DoctorReviewController::class, 'store'])->name('doctor-reviews.store');
 
 // Departments
@@ -123,6 +126,7 @@ Route::get('/departments/{department}', [DepartmentController::class, 'show'])->
 Route::get('/hospitals', [HospitalController::class, 'index'])->name('hospitals.index');
 Route::get('/hospitals/{hospital}', [HospitalController::class, 'show'])->name('hospitals.show');
 
+// Locations
 Route::get('/locations', [LocationController::class, 'index'])->name('locations.index');
 
 // Diagnostics
@@ -155,10 +159,16 @@ Route::post('/blood-bank/register', [BloodBankController::class, 'storeDonor'])-
 Route::get('/blood-bank/request', [BloodBankController::class, 'createRequest'])->name('blood-bank.request');
 Route::post('/blood-bank/request', [BloodBankController::class, 'storeRequest'])->name('blood-bank.request.store');
 
+// Newsletter
+Route::post('/newsletter/subscribe', [NewsletterController::class, 'subscribe'])->name('newsletter.subscribe');
+Route::post('/newsletter/unsubscribe', [NewsletterController::class, 'unsubscribe'])->name('newsletter.unsubscribe');
+
 // Appointment
 Route::get('/book-appointment', [AppointmentController::class, 'create'])->name('appointment.create');
 Route::post('/book-appointment', [AppointmentController::class, 'store'])->name('appointment.store');
 
+
+// Slots
 Route::get('/doctors/{doctor}/available-dates', [SlotController::class, 'availableDates'])->name('slots.dates');
 Route::get('/doctors/{doctor}/slots', [SlotController::class, 'slots'])->name('slots.index');
 
@@ -194,6 +204,9 @@ Route::get('/media/journal', [JournalController::class, 'index'])->name('journal
 Route::get('/video-consultation', [VideoConsultationController::class, 'create'])->name('video-consultation.create');
 Route::post('/video-consultation', [VideoConsultationController::class, 'store'])->name('video-consultation.store');
 Route::get('/video-consultation/{videoConsultation}/join', [VideoConsultationController::class, 'joinRoom'])->name('video-consultation.join');
+
+// Faq
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 
 // Dynamic Custom Pages (সবসময় সবার শেষে রাখতে হবে)
@@ -245,6 +258,9 @@ Route::prefix('patient')->name('patient.')->group(function () {
 });
 
 
+
+
+// Doctor Portal Routes
 Route::prefix('doctor')->name('doctor.')->group(function () {
     Route::get('login', [DoctorAuthController::class, 'showLogin'])->name('login');
     Route::post('login', [DoctorAuthController::class, 'login'])->name('login.submit');
@@ -266,9 +282,12 @@ Route::prefix('doctor')->name('doctor.')->group(function () {
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
+
+    //login
     Route::get('login', [AdminAuthController::class, 'showLogin'])->name('login');
     Route::post('login', [AdminAuthController::class, 'login'])->name('login.submit');
 
+    //2fa
     Route::get('2fa', [AdminAuthController::class, 'showTwoFactor'])->name('2fa.show');
     Route::post('2fa', [AdminAuthController::class, 'verifyTwoFactor'])->name('2fa.verify');
 
@@ -342,6 +361,9 @@ Route::prefix('admin')->name('admin.')->group(function () {
         //online reports
         Route::resource('online-reports', AdminOnlineReportController::class)->except('show');
 
+        //faqs
+        Route::resource('faqs', AdminFaqController::class)->except('show');
+
 
         //comments
         Route::get('comments', [AdminCommentController::class, 'index'])->name('comments.index');
@@ -396,6 +418,12 @@ Route::prefix('admin')->name('admin.')->group(function () {
         //invoices
         Route::resource('invoices', InvoiceController::class);
         Route::get('invoices/{invoice}/pdf', [InvoicePdfController::class, 'download'])->name('invoices.pdf');
+
+
+        //newsletter
+        Route::get('newsletter-subscribers', [NewsletterSubscriberController::class, 'index'])->name('newsletter-subscribers.index');
+        Route::get('newsletter-subscribers/export', [NewsletterSubscriberController::class, 'export'])->name('newsletter-subscribers.export');
+        Route::delete('newsletter-subscribers/{newsletter_subscriber}', [NewsletterSubscriberController::class, 'destroy'])->name('newsletter-subscribers.destroy');
 
 
         //payments

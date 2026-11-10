@@ -230,6 +230,33 @@
                 বসাও।</p>
         </div>
 
+
+        <h3 class="font-semibold text-gray-700 border-b pb-2 mb-4 pt-4">Google Reviews</h3>
+
+        <div>
+            <label class="block text-sm font-medium mb-1">Google Business Profile URL</label>
+            <input type="url" name="google_business_profile_url"
+                value="{{ old('google_business_profile_url', $setting->google_business_profile_url) }}"
+                placeholder="https://g.page/r/..." class="w-full border border-gray-200 rounded-md px-4 py-2.5">
+        </div>
+
+        <div class="grid grid-cols-2 gap-5">
+            <div>
+                <label class="block text-sm font-medium mb-1">Google Rating (out of 5)</label>
+                <input type="number" step="0.1" name="google_rating"
+                    value="{{ old('google_rating', $setting->google_rating) }}" min="0" max="5"
+                    class="w-full border border-gray-200 rounded-md px-4 py-2.5">
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1">Total Review Count</label>
+                <input type="number" name="google_review_count"
+                    value="{{ old('google_review_count', $setting->google_review_count) }}"
+                    class="w-full border border-gray-200 rounded-md px-4 py-2.5">
+            </div>
+        </div>
+        <p class="text-xs text-gray-400">Google Business Profile থেকে rating ও review সংখ্যা দেখে এখানে ম্যানুয়ালি আপডেট
+            করো (মাসে একবার যথেষ্ট)।</p>
+
         <h3 class="font-semibold text-gray-700 border-b pb-2 mb-4 pt-4">SMS & Email Notifications</h3>
 
         <label class="flex items-center gap-2 text-sm">
